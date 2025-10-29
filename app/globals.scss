@@ -91,6 +91,10 @@ hr {
 	@apply cursor-pointer px-12 py-8 rounded duration-250 ease-out hover:scale-102 active:scale-98;
 }
 
+.link {
+	@apply text-accent underline cursor-pointer hover:text-secondary;
+}
+
 input,
 textarea {
 	@apply font-[inherit] p-8 bg-white rounded focus:shadow-input focus:outline-none;
