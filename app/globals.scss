@@ -96,6 +96,10 @@ textarea {
 	@apply font-[inherit] p-8 bg-white rounded focus:shadow-input focus:outline-none;
 }
 
+.error {
+	@apply border-red-600 border-1 border-l-6;
+}
+
 img,
 a {
 	-webkit-user-drag: none;
