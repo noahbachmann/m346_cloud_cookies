@@ -29,6 +29,7 @@ const eslintConfig = defineConfig([
 			'@style/quotes': ['warn', 'single'],
 			'@style/semi': ['warn', 'never'],
 			'@style/object-curly-spacing': ['warn', 'always'],
+			'@style/jsx-curly-spacing': ['warn', 'always'],
 		}
 	}
 ]);

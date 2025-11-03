@@ -51,6 +51,7 @@ export default function Login() {
 					type="password"
 					placeholder="Your password"
 					{...register('password', { required: true, maxLength: 50, pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/ })} />
+				{errors.password?.type === 'pattern' && <p className="text-red-500 text-sm">Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.</p>}
 
 				<button className="button text-primary bg-secondary border-2 hover:border-accent hover:text-accent active:border-white active:text-white">{isLogin ? 'Login' : 'Sign Up'}</button>
 
