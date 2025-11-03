@@ -43,8 +43,7 @@ export async function logout() {
 export async function incrementScore(data) {
 	const supabase = await createClient()
 	const userId = data.user_id
-	console.log('updateing', data)
-		await supabase
+	await supabase
 		.from('gameState')
 		.update({ score:data.score, highscore:data.highscore, upgrades:data.upgrades, clicks:data.clicks, self_clicks:data.self_clicks, highscore:data.highscore, total_score:data.total_score, last_update: new Date() })
 		.eq('user_id', userId)
