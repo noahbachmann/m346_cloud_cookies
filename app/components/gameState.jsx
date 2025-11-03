@@ -14,7 +14,6 @@ export default async function GameState({ }) {
 		return <p>No user logged in</p>
 	}
 
-	const { data } = await supabase.from('gameState').select().eq('user_id', user.id).limit(1).single()
 	/* data object:
 	{
 		id: 5,
@@ -37,6 +36,11 @@ export default async function GameState({ }) {
 		total_score: 0,
 		prestige: 0
 	} */
+
+	const { data } = await supabase.from('gameState').select().eq('user_id', user.id).limit(1).single()
+	const clicks = [data.upgrades.upgrade3, data.upgrades.upgrade4*2, data.upgrades.upgrade5*4, data.upgrades.upgrade6*8, data.upgrades.upgrade7*16].reduce(((a,b)=>a+b)) * Math.floor((new Date() - new Date(data.last_update)) / 1000)
+	data.score += Math.floor(clicks * (data.upgrades.upgrade8+1) * ((data.prestige*0.5)+1))
+
 	return (
 		<div className="flex justify-around">
 			<GameClient initialData={ data } />
