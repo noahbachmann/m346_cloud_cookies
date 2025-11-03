@@ -34,7 +34,8 @@ export default async function GameState({ }) {
 		self_clicks: 0,
 		last_update,
 		highscore: 0,
-		total_score: 0
+		total_score: 0,
+		prestige: 0
 	} */
 	return (
 		<div className="flex justify-around">
