@@ -1,0 +1,12 @@
+{
+	"upgrade1": {
+		"cost": 10,
+		"description": "Increase cookies per click by 1",
+		"increase": 1
+	},
+	"upgrade2": {
+		"cost": 100,
+		"description": "Double cookies per click",
+		"increase": 2
+	}
+}
