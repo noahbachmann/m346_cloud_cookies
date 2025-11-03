@@ -2,6 +2,7 @@ import './globals.scss'
 import { createClient } from '@utils/supabase/server'
 
 import Navbar from './components/navbar.jsx'
+import Footer from './components/footer.jsx'
 
 export const metadata = {
 	title: 'Cloud Cookies',
@@ -19,6 +20,7 @@ export default async function RootLayout({ children }) {
 				<main className="flex-1">
 					{children}
 				</main>
+				<Footer />
 			</body>
 		</html>
 	)
