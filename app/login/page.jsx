@@ -40,22 +40,22 @@ export default function Login() {
 
 	return (
 		<div className="container container-sm">
-			<form className="flex-1 flex flex-col justify-evenly gap-5 p-10" onSubmit={handleSubmit(OnSubmit)}>
+			<form className="flex-1 flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(OnSubmit) }>
 				<input
-					className={`${errors.username ? 'error' : ''}`}
+					className={ `${errors.email ? 'error' : ''}` }
 					type="email" placeholder="Your email"
-					{...register('email', { required: true, maxLength: 50, pattern: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/ })} />
+					{ ...register('email', { required: true, maxLength: 50, pattern: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/ }) } />
 
 				<input
-					className={`${errors.password ? 'error' : ''}`}
+					className={ `${errors.password ? 'error' : ''}` }
 					type="password"
 					placeholder="Your password"
-					{...register('password', { required: true, maxLength: 50, pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/ })} />
+					{ ...register('password', { required: true, maxLength: 50, pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/ }) } />
 				{errors.password?.type === 'pattern' && <p className="text-red-500 text-sm">Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.</p>}
 
 				<button className="button text-primary bg-secondary border-2 hover:border-accent hover:text-accent active:border-white active:text-white">{isLogin ? 'Login' : 'Sign Up'}</button>
 
-				<p className="link" onClick={() => setIsLogin(!isLogin)}>
+				<p className="link" onClick={ () => setIsLogin(!isLogin) }>
 					{isLogin ? 'Create an account' : 'Have an account? Log In'}
 				</p>
 			</form>

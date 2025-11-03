@@ -11,7 +11,7 @@ export default function Navbar({ user }) {
 				(
 					<>
 						<Link href="/account">Account</Link>
-						<button onClick={logout}>Logout</button>
+						<button onClick={ logout }>Logout</button>
 					</>
 				) : (
 					<Link href="/login">Login</Link>

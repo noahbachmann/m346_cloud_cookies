@@ -1,5 +1,6 @@
 
 import { createClient } from '@utils/supabase/server'
+import GameClient from './gameClient'
 
 export default async function GameState({ }) {
 	const supabase = await createClient()
@@ -14,7 +15,7 @@ export default async function GameState({ }) {
 	}
 
 	const { data } = await supabase.from('gameState').select().eq('user_id', user.id).limit(1).single()
-	/* data object: 
+	/* data object:
 	{
 		id: 5,
 		score: 0,
@@ -27,19 +28,17 @@ export default async function GameState({ }) {
 			upgrade6: 0,
 			upgrade7: 0,
 			upgrade8: 0
+		},
+		user_id: 'some-uuid',
+		clicks: 0,
+		self_clicks: 0,
+		last_update,
+		highscore: 0,
+		total_score: 0
 	} */
 	return (
 		<div className="flex justify-around">
-			<div>
-				<p>left</p>
-				<p>{data.score}</p>
-			</div>
-			<div>
-				<p>center</p>
-			</div>
-			<div>
-				<p>right</p>
-			</div>
+			<GameClient initialData={ data } />
 		</div>
 	)
 }
