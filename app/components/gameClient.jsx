@@ -11,6 +11,8 @@ export default function GameClient({ initialData }) {
 		dataRef.current = data
 	}, [data])
 
+	const [prestigeCost, setPrestigeCost] = useState(initialData.prestige == 0 ? 1000000000 : initialData.prestige * 5 * 1000000000)
+
 	useEffect(() => {
 		const saveData = async () => {
 			await incrementScore(dataRef.current)
@@ -67,8 +69,7 @@ export default function GameClient({ initialData }) {
 	}
 
 	function prestige(){
-		const cost = data.prestige == 0 ? 1000000 : data.prestige * 5 * 1000000
-		if(data.score < cost) return
+		if(data.score < prestigeCost) return
 		setData({
 			...prev,
 			score: 0,
@@ -84,6 +85,7 @@ export default function GameClient({ initialData }) {
 			},
 			prestige: prev.prestige + 1,
 		})
+		setPrestigeCost(data.prestige * 5 * 1000000000)
 	}
 
 	function formatNumber(num) {
@@ -113,9 +115,11 @@ export default function GameClient({ initialData }) {
 				<p>Upgrades purchased: {Object.values(data.upgrades).reduce((a,b) => a+b)}</p>
 				<p>Prestige Stage: 0</p>
 			</div>
+
 			<div>
 				<button onClick={ click }>Click Me</button>
 			</div>
+
 			<div>
 				{
 					Object.entries(data.upgrades).map(([upgrade, level], index) => {
@@ -137,7 +141,7 @@ export default function GameClient({ initialData }) {
 				}
 				<div>
 					<p>Prestige</p>
-					<button onClick={ () => prestige() }>{ formatNumber(data.prestige == 0 ? 1000000000 : data.prestige * 5 * 1000000000) }</button>
+					<button onClick={ () => prestige() }>{ formatNumber(prestigeCost) }</button>
 				</div>
 			</div>
 		</>
