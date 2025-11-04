@@ -1,0 +1,50 @@
+{
+	"clickBooster": {
+		"name":"Click Booster",
+		"cost": 500,
+		"description": "Each manual click gives +1 point per Upgrade.",
+		"increase": 1
+	},
+	"autoClicker": {
+		"name":"Auto Clicker",
+		"cost": 50,
+		"description": "Generates 1 point per second automatically.",
+		"increase": 1
+	},
+	"cloudServer": {
+		"name":"Cloud Server",
+		"cost": 2500,
+		"description": "+10 auto-clicks per second.",
+		"increase": 10
+	},
+	"dataCenter": {
+		"name":"Data Center",
+		"cost": 25000,
+		"description": "+100 auto-clicks per second.",
+		"increase": 100
+	},
+	"aiAutomation": {
+		"name":"AI Automation",
+		"cost": 150000,
+		"description": "+500 auto-clicks per second.",
+		"increase": 500
+	},
+	"loadBalancer": {
+		"name":"Load Balancer",
+		"cost": 1000000,
+		"description": "Increases the efficiency of all automatic clickers by 10% per upgrade.",
+		"increase": 0.1
+	},
+	"dataComp": {
+		"name":"Data Compression",
+		"cost": 25000000,
+		"description": "Reduces upgrade costs by 25%.",
+		"increase": 0.25
+	},
+	"timeDilation": {
+		"name":"Time Dilation",
+		"cost": 500000000,
+		"description": "Each click rips open a rift in time — the entire system surges into overdrive for 10 seconds as your system bends reality itself.",
+		"increase": 2
+	}
+}

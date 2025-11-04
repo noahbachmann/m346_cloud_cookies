@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
 import { incrementScore } from '../login/actions'
+import upgrades from '../data/upgrades.json'
 
 export default function GameClient({ initialData }) {
 
@@ -20,8 +21,8 @@ export default function GameClient({ initialData }) {
 		}, 60000)
 
 		const idleInterval = setInterval(() => {
-			const additionalClicks = [dataRef.current.upgrades.upgrade3, dataRef.current.upgrades.upgrade4*2, dataRef.current.upgrades.upgrade5*4, dataRef.current.upgrades.upgrade6*8, dataRef.current.upgrades.upgrade7*16].reduce(((a,b)=>a+b))
-			const additionalScore = Math.round(additionalClicks*(dataRef.current.upgrades.upgrade8+1) * ((dataRef.current.prestige*0.5)+1))
+			const additionalClicks = [dataRef.current.upgrades.autoClicker*upgrades.autoClicker.increase, dataRef.current.upgrades.cloudServer*upgrades.cloudServer.increase, dataRef.current.upgrades.dataCenter*upgrades.dataCenter.increase, dataRef.current.upgrades.aiAutomation*upgrades.aiAutomation.increase].reduce(((a,b)=>a+b))*(1 + dataRef.current.upgrades.loadBalancer * upgrades.loadBalancer.increase)
+			const additionalScore = Math.round(additionalClicks* ((dataRef.current.prestige*0.5)+1))
 
 			setData(prev => ({
 				...prev,
@@ -40,8 +41,8 @@ export default function GameClient({ initialData }) {
 	}, [])
 
 	function click() {
-		const additionalClicks = 1 * (data.upgrades.upgrade1 + 1)
-		const additionalScore = Math.round(additionalClicks * (data.upgrades.upgrade8+1) * ((dataRef.current.prestige*0.5)+1))
+		const additionalClicks = 1 * (data.upgrades.clickBooster + 1)
+		const additionalScore = Math.round(additionalClicks * ((dataRef.current.prestige*0.5)+1))
 		setData(prev => ({
 			...prev,
 			score: prev.score + additionalScore,
@@ -53,6 +54,7 @@ export default function GameClient({ initialData }) {
 	}
 
 	function buyUpgrade(upgrade, cost){
+		cost = cost - Math.floor(cost * (data.upgrades.dataComp * upgrades.dataComp.increase))
 		if(data.score < cost) return
 		setData(prev => ({
 			...prev,
@@ -66,36 +68,48 @@ export default function GameClient({ initialData }) {
 
 	function prestige(){
 		const cost = data.prestige == 0 ? 1000000 : data.prestige * 5 * 1000000
-		if(data.total_score < cost) return
+		if(data.score < cost) return
 		setData({
 			...prev,
 			score: 0,
 			upgrades: {
-				upgrade1: 0,
-				upgrade2: 0,
-				upgrade3: 0,
-				upgrade4: 0,
-				upgrade5: 0,
-				upgrade6: 0,
-				upgrade7: 0,
-				upgrade8: 0
+				clickBooster: 0,
+				autoClicker: 0,
+				cloudServer: 0,
+				dataCenter: 0,
+				aiAutomation: 0,
+				loadBalancer: 0,
+				dataComp: 0,
+				timeDilation: 0,
 			},
 			prestige: prev.prestige + 1,
 		})
+	}
+
+	function formatNumber(num) {
+		if (num >= 1_000_000_000) {
+			return (num / 1_000_000_000).toFixed(1).replace(/\.0$/, '') + 'b'
+		} else if (num >= 1_000_000) {
+			return (num / 1_000_000).toFixed(1).replace(/\.0$/, '') + 'm'
+		} else if (num >= 1_000) {
+			return (num / 1_000).toFixed(1).replace(/\.0$/, '') + 'k'
+		} else {
+			return num.toString()
+		}
 	}
 
 	return (
 		<>
 			<div>
 				<p>left</p>
-				<p>Points: {data.score}</p>
-				<p>Points/s: {[data.upgrades.upgrade3, data.upgrades.upgrade4*2, data.upgrades.upgrade5*4, data.upgrades.upgrade6*8, data.upgrades.upgrade7*16].reduce(((a,b)=>a+b))}</p>
-				<p>Click value: {data.upgrades.upgrade1+1}</p>
-				<p>Total Clicks: {data.clicks}</p>
+				<p>Points: {formatNumber(data.score)}</p>
+				<p>Points/s: {formatNumber([data.upgrades.autoClicker*upgrades.autoClicker.increase, data.upgrades.cloudServer*upgrades.cloudServer.increase, data.upgrades.dataCenter*upgrades.dataCenter.increase, data.upgrades.aiAutomation*upgrades.aiAutomation.increase].reduce(((a,b)=>a+b))*(1 + data.upgrades.loadBalancer * upgrades.loadBalancer.increase))}</p>
+				<p>Click value: {formatNumber(data.upgrades.clickBooster+1)}</p>
+				<p>Total Clicks: {formatNumber(data.clicks)}</p>
 				<p>Manual Clicks: {data.self_clicks}</p>
 				<p>Automated Clicks: {data.clicks - data.self_clicks}</p>
-				<p>Total Points earned: {data.total_score}</p>
-				<p>Most Points: {data.highscore}</p>
+				<p>Total Points earned: {formatNumber(data.total_score)}</p>
+				<p>Most Points: {formatNumber(data.highscore)}</p>
 				<p>Upgrades purchased: {Object.values(data.upgrades).reduce((a,b) => a+b)}</p>
 				<p>Prestige Stage: 0</p>
 			</div>
@@ -105,19 +119,25 @@ export default function GameClient({ initialData }) {
 			<div>
 				{
 					Object.entries(data.upgrades).map(([upgrade, level], index) => {
-						const cost = Math.floor(20 * (level+1) * Math.pow((index + 1),2))
+						const upgradeData = upgrades[upgrade]
+						const cost = Math.floor(upgradeData.cost * (level+1))
 
 						return (
 							<div className="flex" key={ index }>
-								<p>{ upgrade } - Level: { level }</p>
-								<button onClick={ () => buyUpgrade(upgrade, cost) }>{ cost }</button>
+								<p>{ upgradeData.name } - Level: { level }</p>
+								{
+									upgradeData.name == 'Data Compression' && level > 0 ?
+										<button disabled>Max. Level</button>
+										:
+										<button onClick={ () => buyUpgrade(upgrade, cost) }>{ formatNumber(cost) }</button>
+								}
 							</div>
 						)
 					})
 				}
 				<div>
 					<p>Prestige</p>
-					<button onClick={ () => prestige() }>{ data.prestige == 0 ? 1000000 : data.prestige * 5 * 1000000 }</button>
+					<button onClick={ () => prestige() }>{ formatNumber(data.prestige == 0 ? 1000000000 : data.prestige * 5 * 1000000000) }</button>
 				</div>
 			</div>
 		</>

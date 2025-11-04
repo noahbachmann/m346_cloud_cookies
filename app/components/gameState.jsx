@@ -1,6 +1,7 @@
 
 import { createClient } from '@utils/supabase/server'
 import GameClient from './gameClient'
+import upgrades from '../data/upgrades.json'
 
 export default async function GameState({ }) {
 	const supabase = await createClient()
@@ -18,15 +19,15 @@ export default async function GameState({ }) {
 	{
 		id: 5,
 		score: 0,
-		upgrades: {
-			upgrade1: 0,
-			upgrade2: 0,
-			upgrade3: 0,
-			upgrade4: 0,
-			upgrade5: 0,
-			upgrade6: 0,
-			upgrade7: 0,
-			upgrade8: 0
+		upgrades:{
+			"clickBooster": 0,
+			"autoClicker": 0,
+			"cloudServer": 0,
+			"dataCenter": 0,
+			"aiAutomation": 0,
+			"loadBalancer": 0,
+			"dataComp": 0,
+			"timeDilation": 0,
 		},
 		user_id: 'some-uuid',
 		clicks: 0,
@@ -38,9 +39,9 @@ export default async function GameState({ }) {
 	} */
 
 	const { data } = await supabase.from('gameState').select().eq('user_id', user.id).limit(1).single()
-	const clicks = [data.upgrades.upgrade3, data.upgrades.upgrade4*2, data.upgrades.upgrade5*4, data.upgrades.upgrade6*8, data.upgrades.upgrade7*16].reduce(((a,b)=>a+b)) * Math.floor((new Date() - new Date(data.last_update)) / 1000)
-	data.score += Math.floor(clicks * (data.upgrades.upgrade8+1) * ((data.prestige*0.5)+1))
-
+	const clicks = [data.upgrades.autoClicker*upgrades.autoClicker.increase, data.upgrades.cloudServer*upgrades.cloudServer.increase, data.upgrades.dataCenter*upgrades.dataCenter.increase, data.upgrades.aiAutomation*upgrades.aiAutomation.increase].reduce(((a,b)=>a+b))*(1 + data.upgrades.loadBalancer * upgrades.loadBalancer.increase) * Math.floor((new Date() - new Date(data.last_update)) / 1000)
+	data.score += Math.floor(clicks * ((data.prestige*0.5)+1))
+	console.log(data)
 	return (
 		<div className="flex justify-around">
 			<GameClient initialData={ data } />
