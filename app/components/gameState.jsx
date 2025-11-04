@@ -40,8 +40,13 @@ export default async function GameState({ }) {
 
 	const { data } = await supabase.from('gameState').select().eq('user_id', user.id).limit(1).single()
 	const clicks = [data.upgrades.autoClicker*upgrades.autoClicker.increase, data.upgrades.cloudServer*upgrades.cloudServer.increase, data.upgrades.dataCenter*upgrades.dataCenter.increase, data.upgrades.aiAutomation*upgrades.aiAutomation.increase].reduce(((a,b)=>a+b))*(1 + data.upgrades.loadBalancer * upgrades.loadBalancer.increase) * Math.floor((new Date() - new Date(data.last_update)) / 1000)
-	data.score += Math.floor(clicks * ((data.prestige*0.5)+1))
-	console.log(data)
+	const score = Math.round(clicks * ((data.prestige*0.5)+1))
+
+	data.score += score
+	data.total_score += score
+	data.highscore = Math.max(data.score, data.highscore)
+	data.clicks += clicks
+
 	return (
 		<div className="flex justify-around">
 			<GameClient initialData={ data } />
