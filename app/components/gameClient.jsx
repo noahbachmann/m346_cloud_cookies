@@ -11,6 +11,7 @@ export default function GameClient({ initialData }) {
 		dataRef.current = data
 	}, [data])
 
+	const [boosting, setBoosting] = useState(false)
 	const [prestigeCost, setPrestigeCost] = useState(initialData.prestige == 0 ? 1000000000 : initialData.prestige * 5 * 1000000000)
 
 	useEffect(() => {
@@ -24,7 +25,7 @@ export default function GameClient({ initialData }) {
 
 		const idleInterval = setInterval(() => {
 			const additionalClicks = [dataRef.current.upgrades.autoClicker*upgrades.autoClicker.increase, dataRef.current.upgrades.cloudServer*upgrades.cloudServer.increase, dataRef.current.upgrades.dataCenter*upgrades.dataCenter.increase, dataRef.current.upgrades.aiAutomation*upgrades.aiAutomation.increase].reduce(((a,b)=>a+b))*(1 + dataRef.current.upgrades.loadBalancer * upgrades.loadBalancer.increase)
-			const additionalScore = Math.round(additionalClicks* ((dataRef.current.prestige*0.5)+1))
+			const additionalScore = Math.round(additionalClicks* (1 + (dataRef.current.prestige*0.5) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0)))
 
 			setData(prev => ({
 				...prev,
@@ -44,7 +45,7 @@ export default function GameClient({ initialData }) {
 
 	function click() {
 		const additionalClicks = 1 * (data.upgrades.clickBooster + 1)
-		const additionalScore = Math.round(additionalClicks * ((dataRef.current.prestige*0.5)+1))
+		const additionalScore = Math.round(additionalClicks *  (1 + (dataRef.current.prestige*0.5) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0)))
 		setData(prev => ({
 			...prev,
 			score: prev.score + additionalScore,
@@ -66,6 +67,14 @@ export default function GameClient({ initialData }) {
 				[upgrade]: prev.upgrades[upgrade] + 1
 			}
 		}))
+	}
+
+	function startBoost(){
+		if(boosting) return
+		setBoosting(true)
+		setTimeout(() => {
+			setBoosting(false)
+		}, 15000)
 	}
 
 	function prestige(){
@@ -105,7 +114,7 @@ export default function GameClient({ initialData }) {
 			<div>
 				<p>left</p>
 				<p>Points: {formatNumber(data.score)}</p>
-				<p>Points/s: {formatNumber([data.upgrades.autoClicker*upgrades.autoClicker.increase, data.upgrades.cloudServer*upgrades.cloudServer.increase, data.upgrades.dataCenter*upgrades.dataCenter.increase, data.upgrades.aiAutomation*upgrades.aiAutomation.increase].reduce(((a,b)=>a+b))*(1 + data.upgrades.loadBalancer * upgrades.loadBalancer.increase))}</p>
+				<p>Points/s: {formatNumber([data.upgrades.autoClicker*upgrades.autoClicker.increase, data.upgrades.cloudServer*upgrades.cloudServer.increase, data.upgrades.dataCenter*upgrades.dataCenter.increase, data.upgrades.aiAutomation*upgrades.aiAutomation.increase].reduce(((a,b)=>a+b))*(1 + data.upgrades.loadBalancer * upgrades.loadBalancer.increase)*(1 + (data.prestige*0.5) + (boosting ? data.upgrades.timeDilation * upgrades.timeDilation.increase : 0)))}</p>
 				<p>Click value: {formatNumber(data.upgrades.clickBooster+1)}</p>
 				<p>Total Clicks: {formatNumber(data.clicks)}</p>
 				<p>Manual Clicks: {data.self_clicks}</p>
@@ -118,6 +127,7 @@ export default function GameClient({ initialData }) {
 
 			<div>
 				<button onClick={ click }>Click Me</button>
+				<button className={ data.upgrades.timeDilation <= 0 ? 'hidden' : 'bg-primary' } onClick={ startBoost }>Boost</button>
 			</div>
 
 			<div>
