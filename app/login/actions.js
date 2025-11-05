@@ -15,11 +15,22 @@ export async function login(formData, login) {
 
 	const user = data.user
 	if (user && !login) {
-		await supabase
+		const { data } = await supabase
 			.from('gameState')
 			.insert([
 				{
 					user_id: user.id,
+				}
+			])
+			.select('id')
+
+		await supabase
+			.from('profiles')
+			.insert([
+				{
+					id: user.id,
+					name: user.email.split('@')[0],
+					gameState_id: data[0].id
 				}
 			])
 	}
