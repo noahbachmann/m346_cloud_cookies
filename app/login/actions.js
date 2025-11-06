@@ -15,7 +15,7 @@ export async function login(formData, login) {
 
 	const user = data.user
 	if (user && !login) {
-		const { data } = await supabase
+		const { data: state } = await supabase
 			.from('gameState')
 			.insert([
 				{
@@ -30,13 +30,16 @@ export async function login(formData, login) {
 				{
 					id: user.id,
 					name: user.email.split('@')[0],
-					gameState_id: data[0].id
+					gameState_id: state[0].id
 				}
 			])
+		revalidatePath('/', 'layout')
+		redirect('/login/email')
 	}
-
-	revalidatePath('/', 'layout')
-	redirect('/')
+	else {
+		revalidatePath('/', 'layout')
+		redirect('/')
+	}
 }
 
 export async function logout() {

@@ -1,8 +1,12 @@
+'use client'
 import Link from 'next/link'
 
-import { logout } from '../login/actions'
-
 export default function Navbar({ user }) {
+
+	function handleLogout() {
+		window.location.href = '/logout'
+	}
+
 	return (
 		<div className="w-full h-30 bg-green-500">
 			<Link href="/">Home</Link>
@@ -11,7 +15,7 @@ export default function Navbar({ user }) {
 				(
 					<>
 						<Link href="/account">Account</Link>
-						<button onClick={ logout }>Logout</button>
+						<button onClick={ handleLogout }>Logout</button>
 					</>
 				) : (
 					<Link href="/login">Login</Link>
