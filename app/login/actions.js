@@ -34,7 +34,7 @@ export async function login(formData, login) {
 				}
 			])
 		revalidatePath('/', 'layout')
-		redirect('/login/email')
+		redirect('/login/confirm/email')
 	}
 	else {
 		revalidatePath('/', 'layout')
