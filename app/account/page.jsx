@@ -16,12 +16,11 @@ export default async function Account() {
 	if (error || !user) {
 		redirect('/login')
 	}
-	const name = profile.name
-	console.log(name)
+
 	return (
 		<>
 			<p>E-Mail: { user.email }</p>
-			<ChangeUser initalName={ name } />
+			<ChangeUser initialName={ profile.name } />
 			<Link href="/account/password/update">Change Password</Link>
 		</>
 	)
