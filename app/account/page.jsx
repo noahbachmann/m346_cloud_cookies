@@ -1,3 +1,4 @@
+import ChangeUser from './changeUser'
 import { redirect } from 'next/navigation'
 import { createClient } from '@utils/supabase/server'
 import Link from 'next/link'
@@ -15,11 +16,12 @@ export default async function Account() {
 	if (error || !user) {
 		redirect('/login')
 	}
-
+	const name = profile.name
+	console.log(name)
 	return (
 		<>
 			<p>E-Mail: { user.email }</p>
-			<p>Username: { profile.name }</p>
+			<ChangeUser initalName={ name } />
 			<Link href="/account/password/update">Change Password</Link>
 		</>
 	)
