@@ -21,7 +21,7 @@ export default function GameClient({ initialData }) {
 
 		const saveInterval = setInterval(() => {
 			saveData()
-		}, 10000)
+		}, 60000)
 
 		const idleInterval = setInterval(() => {
 			const additionalClicks = [dataRef.current.upgrades.autoClicker*upgrades.autoClicker.increase, dataRef.current.upgrades.cloudServer*upgrades.cloudServer.increase, dataRef.current.upgrades.dataCenter*upgrades.dataCenter.increase, dataRef.current.upgrades.aiAutomation*upgrades.aiAutomation.increase].reduce(((a,b)=>a+b))*(1 + dataRef.current.upgrades.loadBalancer * upgrades.loadBalancer.increase)
@@ -109,16 +109,16 @@ export default function GameClient({ initialData }) {
 	}
 
 	return (
-		<div className="flex justify-between md:mt-150">
+		<div className="flex flex-col md:flex-row justify-between md:mt-150">
 			<div className="min-w-300 p-12 bg-primary rounded border-2 border-dark">
-				<h3>Statistics</h3>
+				<h3 className="mb-16">Statistics</h3>
 
-				<div className="flex justify-between">
-					<p>Points:</p>
+				<div className="flex justify-between mb-3">
+					<p className="font-bold">Points:</p>
 					<p>{formatNumber(data.score)}</p>
 				</div>
-				<div className="flex justify-between">
-					<p>Points/s:</p>
+				<div className="flex justify-between mb-3">
+					<p className="font-bold">Points/s:</p>
 					<p>{formatNumber(
 						[
 							data.upgrades.autoClicker * upgrades.autoClicker.increase,
@@ -130,47 +130,63 @@ export default function GameClient({ initialData }) {
 						(1 + (data.prestige * 0.5) + (boosting ? data.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
 					)}</p>
 				</div>
-				<div className="flex justify-between">
-					<p>Click value:</p>
+				<div className="flex justify-between mb-16">
+					<p className="font-bold">Click value:</p>
 					<p>{formatNumber(data.upgrades.clickBooster + 1)}</p>
 				</div>
-				<div className="flex justify-between mb-12">
-					<p>Total Clicks:</p>
+				<div className="flex justify-between mb-3">
+					<p className="font-bold">Total Clicks:</p>
 					<p>{formatNumber(data.clicks)}</p>
 				</div>
-				<div className="flex justify-between">
-					<p>Manual Clicks:</p>
+				<div className="flex justify-between mb-3">
+					<p className="font-bold">Manual Clicks:</p>
 					<p>{formatNumber(data.self_clicks)}</p>
 				</div>
-				<div className="flex justify-between mb-12">
-					<p>Automated Clicks:</p>
+				<div className="flex justify-between mb-16">
+					<p className="font-bold">Automated Clicks:</p>
 					<p>{formatNumber(data.clicks - data.self_clicks)}</p>
 				</div>
-				<div className="flex justify-between">
-					<p>Total Points earned:</p>
+				<div className="flex justify-between mb-3">
+					<p className="font-bold">Total Points earned:</p>
 					<p>{formatNumber(data.total_score)}</p>
 				</div>
-				<div className="flex justify-between">
-					<p>Most Points:</p>
+				<div className="flex justify-between mb-3">
+					<p className="font-bold">Most Points:</p>
 					<p>{formatNumber(data.highscore)}</p>
 				</div>
-				<div className="flex justify-between mb-12">
-					<p>Upgrades purchased:</p>
+				<div className="flex justify-between mb-16">
+					<p className="font-bold">Upgrades purchased:</p>
 					<p>{Object.values(data.upgrades).reduce((a, b) => a + b)}</p>
 				</div>
 				<div className="flex justify-between">
-					<p>Prestige Stage:</p>
+					<p className="font-bold">Prestige Stage:</p>
 					<p>{data.prestige}</p>
 				</div>
 			</div>
-
-			<div className="self-center">
-				<button onClick={ click }>Click Me</button>
-				<button className={ data.upgrades.timeDilation <= 0 ? 'hidden' : 'bg-primary' } onClick={ startBoost }>Boost</button>
+			<div className="self-center flex flex-col items-center gap-50">
+				<div>
+					<button onClick={ click }>Click Me</button>
+				</div>
+				<div className={ data.upgrades.timeDilation <= 0 ? 'hidden' : '' }>
+					{
+						boosting ?
+							<button className="p-10 bg-primary" disabled>Boost</button>
+							:
+							<button className="p-10 bg-primary" onClick={ startBoost }>Boost</button>
+					}
+				</div>
 			</div>
 
 			<div className="min-w-300 p-12 bg-primary rounded border-2 border-dark">
-				<h3>Upgrades</h3>
+				<h3 className="mb-16">Upgrades</h3>
+				<div className="flex justify-between mb-6">
+					<p>Name</p>
+					<div className="flex text-center">
+						<p className="w-70">Cost</p>
+						<p className="px-4">Lvl</p>
+					</div>
+				</div>
+				<hr className="w-full h-2 my-6"/>
 				{
 					Object.entries(data.upgrades).map(([upgrade, level], index) => {
 						const upgradeData = upgrades[upgrade]
@@ -178,13 +194,13 @@ export default function GameClient({ initialData }) {
 
 						return (
 							<div className="flex justify-between mb-6" key={ index }>
-								<p>{ upgradeData.name }</p>
+								<p className="font-bold">{ upgradeData.name }</p>
 								<div className="flex">
 								{
 									upgradeData.name == 'Data Compression' && level > 0 ?
-										<button className="button w-80" disabled>Max. Level</button>
+										<button className="button w-70" disabled>Max. Lvl</button>
 										:
-										<button className="button w-80" onClick={ () => buyUpgrade(upgrade, cost) }>{ formatNumber(cost) }</button>
+										<button className="button w-70" onClick={ () => buyUpgrade(upgrade, cost) }>{ formatNumber(cost) }</button>
 								}
 									<p className="text-[0.8rem] ml-4 px-8 py-6 rounded bg-black text-white">{ level }</p>
 								</div>
@@ -193,9 +209,9 @@ export default function GameClient({ initialData }) {
 					})
 				}
 				<div className="flex justify-between">
-					<p>Prestige</p>
+					<p className="font-bold">Prestige</p>
 					<div className="flex">
-						<button className="button w-80" onClick={ () => prestige() }>{ formatNumber(prestigeCost) }</button>
+						<button className="button w-70" onClick={ () => prestige() }>{ formatNumber(prestigeCost) }</button>
 						<p className="text-[0.8rem] ml-4 px-8 py-6 rounded bg-black text-white">{ data.prestige }</p>
 					</div>
 				</div>
