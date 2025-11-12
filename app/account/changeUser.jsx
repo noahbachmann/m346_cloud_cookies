@@ -10,7 +10,7 @@ export default function ChangeUser({ initialName }){
 		register,
 		handleSubmit,
 		watch,
-		formState: { errors } 
+		formState: { errors }
 	} = useForm({
 		defaultValues: { user: initialName }
 	})
@@ -31,7 +31,7 @@ export default function ChangeUser({ initialName }){
 					type="text"
 					{ ...register('user', { required: true, maxLength: 50 }) } />
 
-				<button className={currentName != savedUser ? 'button' : '' } disabled={currentName == savedUser}>Submit</button>
+				<button className={ currentName != savedUser ? 'button' : '' } disabled={ currentName == savedUser }>Submit</button>
 			</p>
 		</form>
 	)

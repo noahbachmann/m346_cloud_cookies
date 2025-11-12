@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
-import { login } from './actions'
+import { login, signup } from './actions'
 import { createClient } from '@utils/supabase/client'
 
 export default function Login() {
@@ -31,12 +31,19 @@ export default function Login() {
 		checkUser()
 	}, [])
 
-	async function onSubmit(data) {
-		if (!isLogin && data.password !== data.password_confirm) {
+	async function onSignUp(data){
+		if (data.password !== data.password_confirm) {
 			setError('password_confirm', { type: 'pattern', message: 'Passwords do not match' })
 			return
 		}
-		await login(data, isLogin)
+		const { username, ...cred } = data
+
+		await signup(cred, username)
+		reset()
+	}
+
+	async function onLogIn(data) {
+		await login(data)
 		reset()
 	}
 
@@ -47,7 +54,7 @@ export default function Login() {
 	return (
 		(isLogin ?
 			<div className="container container-sm">
-				<form className="flex-1 flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(onSubmit) }>
+				<form className="flex-1 flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(onLogIn) }>
 					<input
 						className={ `${errors.email ? 'error' : ''}` }
 						type="email" placeholder="Your email"
@@ -67,12 +74,17 @@ export default function Login() {
 			</div>
 			:
 			<div className="container container-sm">
-				<form className="flex-1 flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(onSubmit) }>
+				<form className="flex-1 flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(onSignUp) }>
 					<input
 						className={ `${errors.email ? 'error' : ''}` }
 						type="email" placeholder="Your email"
 						{ ...register('email', { required: true, maxLength: 50, pattern: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/ }) } />
 					{ errors.email?.type === 'pattern' && <p className="text-red-500 text-sm">Please input a real e-mail.</p> }
+
+					<input
+						className={ `${errors.username ? 'error' : ''}` }
+						type="string" placeholder="Your username"
+						{ ...register('username', { required: true, maxLength: 20 }) } />
 
 					<input
 						className={ `${errors.password ? 'error' : ''}` }

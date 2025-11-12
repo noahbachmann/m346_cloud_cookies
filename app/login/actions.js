@@ -5,16 +5,16 @@ import { redirect } from 'next/navigation'
 
 import { createClient } from '@utils/supabase/server'
 
-export async function login(formData, login) {
+export async function signup(formData, username){
 	const supabase = await createClient()
-	const { data, error } = login ? await supabase.auth.signInWithPassword(formData) : await supabase.auth.signUp(formData)
+	const { data, error } = await supabase.auth.signUp(formData)
 
 	if (error) {
 		redirect('/error')
 	}
 
 	const user = data.user
-	if (user && !login) {
+	if (user) {
 		const { data: state } = await supabase
 			.from('gameState')
 			.insert([
@@ -29,17 +29,25 @@ export async function login(formData, login) {
 			.insert([
 				{
 					id: user.id,
-					name: user.email.split('@')[0],
+					name: username,
 					gameState_id: state[0].id
 				}
 			])
 		revalidatePath('/', 'layout')
 		redirect('/login/confirm/email')
 	}
-	else {
-		revalidatePath('/', 'layout')
-		redirect('/')
+}
+
+export async function login(formData) {
+	const supabase = await createClient()
+	const { error } = await supabase.auth.signInWithPassword(formData)
+
+	if (error) {
+		redirect('/error')
 	}
+
+	revalidatePath('/', 'layout')
+	redirect('/')
 }
 
 export async function logout() {

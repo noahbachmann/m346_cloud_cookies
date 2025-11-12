@@ -6,10 +6,8 @@ export default async function Leaderboard({}){
 	const { data: users } = await supabase
 		.from('profiles')
 		.select('id, name, gameState(total_score)')
-		.order('total_score', { foreignTable: 'gameState', ascending: false })
+		.order('gameState(total_score)', { ascending: false })
 		.limit(10)
-
-	console.log(users)
 
 	return(
 		<div>
