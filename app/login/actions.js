@@ -10,7 +10,7 @@ export async function signup(formData, username){
 	const { data, error } = await supabase.auth.signUp(formData)
 
 	if (error) {
-		redirect('/error')
+		redirect(`/error?message=${encodeURIComponent(error.message)}`)
 	}
 
 	const user = data.user
@@ -43,7 +43,7 @@ export async function login(formData) {
 	const { error } = await supabase.auth.signInWithPassword(formData)
 
 	if (error) {
-		redirect('/error')
+		redirect(`/error?message=${encodeURIComponent(error.message)}`)
 	}
 
 	revalidatePath('/', 'layout')
@@ -55,7 +55,7 @@ export async function logout() {
 	const { error } = await supabase.auth.signOut({ scope: 'local' })
 
 	if (error) {
-		redirect('/error')
+		redirect(`/error?message=${encodeURIComponent(error.message)}`)
 	}
 
 	revalidatePath('/', 'layout')

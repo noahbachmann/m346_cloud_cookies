@@ -12,7 +12,7 @@ export default function UpdatePassword(){
 		const checkUser = async () => {
 			const { data: { user } } = await supabase.auth.getUser()
 			if(!user)
-				router.push('/error')
+				return 'This user does not exist in our database.'
 		}
 		checkUser()
 	})
