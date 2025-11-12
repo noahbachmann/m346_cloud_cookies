@@ -47,7 +47,7 @@ export default async function Home({ }) {
 	data.clicks += clicks
 
 	return (
-		<div className="container container-lg flex justify-around">
+		<div className="container container-lg">
 			<GameClient initialData={ data } />
 		</div>
 	)

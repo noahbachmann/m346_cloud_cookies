@@ -8,7 +8,7 @@ export default function Navbar({ user }) {
 	}
 
 	return (
-		<div className="w-full h-30 bg-green-500">
+		<div className="w-full h-30 bg-primary">
 			<Link href="/">Home</Link>
 
 			{user ?

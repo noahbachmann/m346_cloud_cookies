@@ -21,10 +21,11 @@
 	--shadow-bottom: 0 2px 2px hsl(0deg 0% 0% / 0.3);
 	--shadow-input: 0 0 0 2px rgb(118, 16, 79);
 
-	--color-primary: #8DC294;
-	--color-secondary: #254d32;
+	--color-primary: #74B1FB;
+	--color-secondary: #2977F5;
+	--color-dark: #1B2636;
 	--color-accent: #76104F;
-	--color-white: #ddd8c4;
+	--color-white: #F4F6F8;
 }
 
 html {
@@ -60,7 +61,7 @@ h6,
 }
 
 p {
-	@apply text-[1.125rem] leading-22;
+	@apply text-[1rem] leading-22;
 }
 
 hr {
@@ -88,7 +89,7 @@ hr {
 }
 
 .button {
-	@apply cursor-pointer px-12 py-8 rounded duration-250 ease-out hover:scale-102 active:scale-98;
+	@apply text-[0.8rem] cursor-pointer px-8 py-6 rounded bg-black text-white;
 }
 
 .link {
