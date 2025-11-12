@@ -24,6 +24,7 @@ const eslintConfig = defineConfig([
 			'import/no-anonymous-default-export': 'off',
 			'react/no-unescaped-entities': 'off',
 			'react-hooks/exhaustive-deps': 'off',
+			'react-hooks/incompatible-library': 'off',
 
 			'@style/no-trailing-spaces': 'warn',
 			'@style/quotes': ['warn', 'single'],
