@@ -18,7 +18,7 @@ export default async function Account() {
 	}
 
 	return (
-		<div className="container max-w-460 p-24 flex justify-center rounded-lg border-2 border-dark bg-primary">
+		<div className="container container-form">
 			<div className="flex flex-col gap-7">
 				<div className="flex justify-between">
 					<p className="font-bold">E-Mail:</p>

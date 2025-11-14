@@ -38,8 +38,8 @@ export default function UpdatePassword(){
 	}
 
 	return(
-		<div className="container container-sm">
-			<form className="flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(onSubmit) }>
+		<div className="container container-form">
+			<form className="w-full flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(onSubmit) }>
 				<input
 					className={ `${errors.password ? 'error' : ''}` }
 					type="password"
@@ -54,7 +54,7 @@ export default function UpdatePassword(){
 					{ ...register('password_confirm', { required: true }) } />
 				{ errors.password_confirm?.type === 'pattern' && <p className="text-red-500 text-sm">{ errors.password_confirm.message }</p> }
 
-				<button>Submit</button>
+				<button className="button">Submit</button>
 			</form>
 		</div>
 	)

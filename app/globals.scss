@@ -84,6 +84,10 @@ hr {
 	@apply max-w-[1224px];
 }
 
+.container-form{
+	@apply  max-w-460 p-24 flex justify-center rounded-lg border-2 border-dark bg-primary;
+}
+
 @utility no-scrollbar {
 	@apply [scrollbar-width:none] [&::-webkit-scrollbar]:hidden;
 }
