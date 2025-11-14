@@ -18,10 +18,15 @@ export default async function Account() {
 	}
 
 	return (
-		<div className="container container-sm">
-			<p>E-Mail: { user.email }</p>
-			<ChangeUser initialName={ profile.name } />
-			<Link href="/account/password/update">Change Password</Link>
+		<div className="container max-w-460 p-24 flex justify-center rounded-lg border-2 border-dark bg-primary">
+			<div className="flex flex-col gap-7">
+				<div className="flex justify-between">
+					<p className="font-bold">E-Mail:</p>
+					<p>{ user.email }</p>
+				</div>
+				<ChangeUser initialName={ profile.name } />
+				<Link className="button" href="/account/password/update">Change Password</Link>
+			</div>
 		</div>
 	)
 }

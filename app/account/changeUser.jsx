@@ -23,16 +23,16 @@ export default function ChangeUser({ initialName }){
 	}
 
 	return(
-		<form className="flex" onSubmit={ handleSubmit(onSubmit) }>
-			<p className="flex items-center gap-5">
-				Username:
+		<form className="flex flex-col gap-6" onSubmit={ handleSubmit(onSubmit) }>
+			<div className="flex items-center justify-between gap-4">
+				<p className="font-bold">Username:</p>
 				<input
 					className={ `${errors.user ? 'error' : ''}` }
 					type="text"
 					{ ...register('user', { required: true, maxLength: 50 }) } />
+			</div>
 
-				<button className={ currentName != savedUser ? 'button' : '' } disabled={ currentName == savedUser }>Submit</button>
-			</p>
+			<button className={ currentName != savedUser ? 'button w-full' : 'hidden' } disabled={ currentName == savedUser }>Change Username</button>
 		</form>
 	)
 }
