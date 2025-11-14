@@ -38,22 +38,24 @@ export default function UpdatePassword(){
 	}
 
 	return(
-		<form className="flex-1 flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(onSubmit) }>
-			<input
-				className={ `${errors.password ? 'error' : ''}` }
-				type="password"
-				placeholder="Your password"
-				{ ...register('password', { required: true, maxLength: 50, pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/ }) } />
-			{ errors.password?.type === 'pattern' && <p className="text-red-500 text-sm">Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.</p> }
+		<div className="container container-sm">
+			<form className="flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(onSubmit) }>
+				<input
+					className={ `${errors.password ? 'error' : ''}` }
+					type="password"
+					placeholder="Your password"
+					{ ...register('password', { required: true, maxLength: 50, pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{8,}$/ }) } />
+				{ errors.password?.type === 'pattern' && <p className="text-red-500 text-sm">Password must be at least 8 characters long and include uppercase, lowercase, number, and special character.</p> }
 
-			<input
-				className={ `${errors.password_confirm ? 'error' : ''}` }
-				type="password"
-				placeholder="Confirm password"
-				{ ...register('password_confirm', { required: true }) } />
-			{ errors.password_confirm?.type === 'pattern' && <p className="text-red-500 text-sm">{ errors.password_confirm.message }</p> }
+				<input
+					className={ `${errors.password_confirm ? 'error' : ''}` }
+					type="password"
+					placeholder="Confirm password"
+					{ ...register('password_confirm', { required: true }) } />
+				{ errors.password_confirm?.type === 'pattern' && <p className="text-red-500 text-sm">{ errors.password_confirm.message }</p> }
 
-			<button>Submit</button>
-		</form>
+				<button>Submit</button>
+			</form>
+		</div>
 	)
 }

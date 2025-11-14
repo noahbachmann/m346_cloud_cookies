@@ -13,11 +13,13 @@ export default async function RootLayout({ children }) {
 
 	const supabase = await createClient()
 	const { data: { user } } = await supabase.auth.getUser()
+	const profile = user ? await supabase.from('profiles').select().eq('id', user.id).limit(1).single() : null
+	console.log(profile)
 	return (
 		<html lang="en">
 			<body className="min-h-screen flex flex-col">
-				<Navbar user={ user } />
-				<main className="flex-1">
+				<Navbar user={ profile?.data } />
+				<main className="flex flex-1 *:my-auto *:flex-1">
 					{children}
 				</main>
 				<Footer />

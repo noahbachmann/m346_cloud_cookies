@@ -18,10 +18,10 @@ export default async function Account() {
 	}
 
 	return (
-		<>
+		<div className="container container-sm">
 			<p>E-Mail: { user.email }</p>
 			<ChangeUser initialName={ profile.name } />
 			<Link href="/account/password/update">Change Password</Link>
-		</>
+		</div>
 	)
 }

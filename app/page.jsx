@@ -47,7 +47,7 @@ export default async function Home({ }) {
 	data.clicks += clicks
 
 	return (
-		<div className="container container-lg">
+		<div className="container container-lg my-auto flex-1">
 			<GameClient initialData={ data } />
 		</div>
 	)

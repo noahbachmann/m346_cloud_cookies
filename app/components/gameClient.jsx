@@ -109,15 +109,15 @@ export default function GameClient({ initialData }) {
 	}
 
 	return (
-		<div className="flex flex-col md:flex-row justify-between md:mt-150">
+		<div className="flex flex-col md:flex-row justify-between">
 			<div className="min-w-300 p-12 bg-primary rounded border-2 border-dark">
 				<h3 className="mb-16">Statistics</h3>
 
-				<div className="flex justify-between mb-3">
+				<div className="flex justify-between mb-5">
 					<p className="font-bold">Points:</p>
 					<p>{formatNumber(data.score)}</p>
 				</div>
-				<div className="flex justify-between mb-3">
+				<div className="flex justify-between mb-5">
 					<p className="font-bold">Points/s:</p>
 					<p>{formatNumber(
 						[
@@ -134,11 +134,11 @@ export default function GameClient({ initialData }) {
 					<p className="font-bold">Click value:</p>
 					<p>{formatNumber(data.upgrades.clickBooster + 1)}</p>
 				</div>
-				<div className="flex justify-between mb-3">
+				<div className="flex justify-between mb-5">
 					<p className="font-bold">Total Clicks:</p>
 					<p>{formatNumber(data.clicks)}</p>
 				</div>
-				<div className="flex justify-between mb-3">
+				<div className="flex justify-between mb-5">
 					<p className="font-bold">Manual Clicks:</p>
 					<p>{formatNumber(data.self_clicks)}</p>
 				</div>
@@ -146,11 +146,11 @@ export default function GameClient({ initialData }) {
 					<p className="font-bold">Automated Clicks:</p>
 					<p>{formatNumber(data.clicks - data.self_clicks)}</p>
 				</div>
-				<div className="flex justify-between mb-3">
+				<div className="flex justify-between mb-5">
 					<p className="font-bold">Total Points earned:</p>
 					<p>{formatNumber(data.total_score)}</p>
 				</div>
-				<div className="flex justify-between mb-3">
+				<div className="flex justify-between mb-5">
 					<p className="font-bold">Most Points:</p>
 					<p>{formatNumber(data.highscore)}</p>
 				</div>
