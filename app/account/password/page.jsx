@@ -34,13 +34,13 @@ export default function PasswordReset({}){
 
 	return(
 		(!sent ?
-			<div className="container container-sm">
+			<div className="container container-form">
 				<form className="flex-1 flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(resetPassword) }>
 					<input
 							className={ `${errors.email ? 'error' : ''}` }
 							type="email" placeholder="E-Mail"
 							{ ...register('email', { required: true, maxLength: 50 }) } />
-					<button>Submit</button>
+					<button className="button">Submit</button>
 				</form>
 			</div>
 			:

@@ -53,7 +53,7 @@ export default function Login() {
 
 	return (
 		(isLogin ?
-			<div className="container container-sm">
+			<div className="container container-form">
 				<form className="flex-1 flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(onLogIn) }>
 					<input
 						className={ `${errors.email ? 'error' : ''}` }
@@ -66,10 +66,10 @@ export default function Login() {
 						placeholder="Your password"
 						{ ...register('password', { required: true, maxLength: 50 }) } />
 
-					<button className="button text-primary bg-secondary border-2 hover:border-accent hover:text-accent active:border-white active:text-white">Login</button>
+					<button className="button">Login</button>
 
-					<p className="link" onClick={ () => setIsLogin(!isLogin) }>Create an account</p>
-					<Link href="/account/password">Forgot Password?</Link>
+					<p className="link text-[1rem]!" onClick={ () => setIsLogin(!isLogin) }>Create an account</p>
+					<Link className="link font-normal! text-[1rem]!" href="/account/password">Forgot Password?</Link>
 				</form>
 			</div>
 			:
