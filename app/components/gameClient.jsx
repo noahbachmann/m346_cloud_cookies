@@ -109,8 +109,8 @@ export default function GameClient({ initialData }) {
 	}
 
 	return (
-		<div className="flex flex-col md:flex-row justify-between">
-			<div className="min-w-300 p-12 bg-primary rounded border-2 border-dark">
+		<div className="py-12 gap-8 flex flex-col md:flex-row justify-between">
+			<div className="min-w-300 p-8 md:p-12 bg-primary rounded border-2 border-dark">
 				<h3 className="mb-16">Statistics</h3>
 
 				<div className="flex justify-between mb-5">
