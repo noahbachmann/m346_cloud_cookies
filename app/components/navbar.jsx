@@ -12,25 +12,23 @@ export default function Navbar({ user }) {
 		<>
 			{ user ?
 				(
-					<div className="w-full px-48 mt-28 grid grid-cols-4 gap-48">
-						<div>
+					<div className="grid w-full px-12 md:px-24 lg:px-48 mt-14 lg:mt-28 grid-cols-3 md:grid-cols-4 gap-12 md:gap-24 lg:gap-48">
+						<div className="hidden md:block">
 							<p>prestige</p>
 						</div>
 
-						<div className="col-span-2 h-60 p-16 flex justify-between items-center bg-primary rounded border-dark border-1">
+						<div className="col-span-2 h-60 p-8 lg:p-16 flex justify-between items-center bg-primary rounded border-dark border-1">
 							<Link className="flex items-center" href="/">
-								<p className="text-white text-[1.75rem]! font-bold">CloudClicker</p>
+								<p className="hidden md:block text-white text-[1.5rem]! lg:text-[1.75rem]! font-bold">CloudClicker</p>
 								<Image src="/vectors/cloud.svg" width="40" height="40" alt="cloud" />
 							</Link>
 
-							<div className="flex gap-8">
-								<Link className="bg-secondary px-16 py-4 rounded" href="/leaderboard">Leaderboard</Link>
-							</div>
+							<Link className="bg-secondary px-8 md:px-16 py-4 rounded" href="/leaderboard">Leaderboard</Link>
 						</div>
 
-						<div className="max-w-250 h-60 px-12 flex justify-between items-center gap-12 bg-primary rounded border-dark border-1">
+						<div className="max-w-250 h-60 px-8 md:px-12 flex justify-between items-center bg-primary rounded border-dark border-1">
 							<div className="flex gap-2">
-								<Link href="/account">{ user.name }</Link>
+								<Link className="hidden lg:block" href="/account">{ user.name.substring(0,8) }</Link>
 								<Image src="/vectors/person.svg" width="35" height="35" alt="user" />
 							</div>
 
@@ -41,7 +39,7 @@ export default function Navbar({ user }) {
 					</div>
 				) :
 				(
-					<div className="w-full px-48 mt-28 grid grid-cols-4 gap-48">
+					<div className="w-full px-48 mt-28 grid grid-cols-4">
 						<div className="col-start-2 col-span-2 h-60 p-16 bg-primary flex justify-between items-center rounded border-dark border-1">
 							<div className="flex items-center">
 								<p className="text-white text-[1.75rem]! font-bold">CloudClicker</p>
