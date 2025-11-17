@@ -202,7 +202,7 @@ export default function GameClient({ initialData }) {
 										:
 										<button className="button w-70" onClick={ () => buyUpgrade(upgrade, cost) }>{ formatNumber(cost) }</button>
 								}
-									<p className="text-[0.8rem] ml-4 px-8 py-6 rounded bg-black text-white">{ level }</p>
+									<p className="min-w-35 text-[0.8rem] ml-4 px-8 py-6 rounded bg-black text-white text-end">{ level }</p>
 								</div>
 							</div>
 						)
@@ -212,7 +212,7 @@ export default function GameClient({ initialData }) {
 					<p className="font-bold">Prestige</p>
 					<div className="flex">
 						<button className="button w-70" onClick={ () => prestige() }>{ formatNumber(prestigeCost) }</button>
-						<p className="text-[0.8rem] ml-4 px-8 py-6 rounded bg-black text-white">{ data.prestige }</p>
+						<p className="min-w-35 text-[0.8rem] ml-4 px-8 py-6 rounded bg-black text-white text-end">{ data.prestige }</p>
 					</div>
 				</div>
 			</div>
