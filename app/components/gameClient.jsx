@@ -12,7 +12,7 @@ export default function GameClient({ initialData }) {
 	}, [data])
 
 	const [boosting, setBoosting] = useState(false)
-	const [prestigeCost, setPrestigeCost] = useState(initialData.prestige == 0 ? 1000000000 : initialData.prestige * 5 * 1000000000)
+	const [prestigeCost, setPrestigeCost] = useState(data.prestige == 0 ? 1000000000 : data.prestige * 5 * 1000000000)
 
 	useEffect(() => {
 		const saveData = async() => {
@@ -21,11 +21,11 @@ export default function GameClient({ initialData }) {
 
 		const saveInterval = setInterval(() => {
 			saveData()
-		}, 60000)
+		}, 20000)
 
 		const idleInterval = setInterval(() => {
 			const additionalClicks = [dataRef.current.upgrades.autoClicker*upgrades.autoClicker.increase, dataRef.current.upgrades.cloudServer*upgrades.cloudServer.increase, dataRef.current.upgrades.dataCenter*upgrades.dataCenter.increase, dataRef.current.upgrades.aiAutomation*upgrades.aiAutomation.increase].reduce(((a,b)=>a+b))*(1 + dataRef.current.upgrades.loadBalancer * upgrades.loadBalancer.increase)
-			const additionalScore = additionalClicks* (1 + (dataRef.current.prestige*0.5) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
+			const additionalScore = additionalClicks* (1 + (dataRef.current.prestige) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
 
 			setData(prev => ({
 				...prev,
@@ -45,7 +45,7 @@ export default function GameClient({ initialData }) {
 
 	function click() {
 		const additionalClicks = 1 * (data.upgrades.clickBooster + 1)
-		const additionalScore = additionalClicks *  (1 + (dataRef.current.prestige*0.5) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
+		const additionalScore = additionalClicks *  (1 + (dataRef.current.prestige) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
 		setData(prev => ({
 			...prev,
 			score: Math.round(prev.score + additionalScore),
@@ -78,7 +78,7 @@ export default function GameClient({ initialData }) {
 
 	async function prestige(){
 		if(data.score < prestigeCost) return
-		setData({
+		setData(prev => ({
 			...prev,
 			score: 0,
 			upgrades: {
@@ -92,7 +92,7 @@ export default function GameClient({ initialData }) {
 				timeDilation: 0,
 			},
 			prestige: prev.prestige + 1,
-		})
+		}))
 		setPrestigeCost(data.prestige * 5 * 1000000000)
 	}
 
@@ -127,7 +127,7 @@ export default function GameClient({ initialData }) {
 							data.upgrades.aiAutomation * upgrades.aiAutomation.increase
 						].reduce((a, b) => a + b) *
 						(1 + data.upgrades.loadBalancer * upgrades.loadBalancer.increase) *
-						(1 + (data.prestige * 0.5) + (boosting ? data.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
+						(1 + (data.prestige) + (boosting ? data.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
 					)}</p>
 				</div>
 				<div className="flex justify-between mb-16">
@@ -170,7 +170,7 @@ export default function GameClient({ initialData }) {
 				<div className={ data.upgrades.timeDilation <= 0 ? 'hidden' : '' }>
 					{
 						boosting ?
-							<button className="p-10 bg-primary" disabled>Boost</button>
+							<button className="p-10 bg-secondary text-black/55" disabled>Boost</button>
 							:
 							<button className="p-10 bg-primary" onClick={ startBoost }>Boost</button>
 					}
