@@ -1,5 +1,6 @@
 import './globals.scss'
 import { createClient } from '@utils/supabase/server'
+import { Analytics } from '@vercel/analytics/next'
 
 import Navbar from './components/navbar.jsx'
 import Footer from './components/footer.jsx'
@@ -24,6 +25,7 @@ export default async function RootLayout({ children }) {
 				</main>
 				<Footer />
 			</body>
+			<Analytics />
 		</html>
 	)
 }
