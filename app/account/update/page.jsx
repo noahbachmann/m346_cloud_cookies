@@ -1,31 +1,15 @@
 'use client'
-import { createClient } from '@utils/supabase/client'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { changePassword } from '../../login/actions'
 import { useForm } from 'react-hook-form'
 
 export default function UpdatePassword(){
 	const router = useRouter()
-	const supabase = createClient()
-
-	useEffect(() => {
-		const checkUser = async () => {
-			const { data: { user } } = await supabase.auth.getUser()
-			if(!user)
-				return 'This user does not exist in our database.'
-		}
-		checkUser()
-	})
 
 	const {
 		register,
 		handleSubmit,
-		reset,
 		formState: { errors } } = useForm()
-
-	async function changePassword(pw){
-		await supabase.auth.updateUser({ password: pw })
-	}
 
 	async function onSubmit(data){
 		if (data.password !== data.password_confirm) {
@@ -33,7 +17,6 @@ export default function UpdatePassword(){
 			return
 		}
 		await changePassword(data.password)
-		reset()
 		router.push('/account')
 	}
 

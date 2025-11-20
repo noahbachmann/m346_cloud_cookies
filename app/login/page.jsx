@@ -1,35 +1,18 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { login, signup } from './actions'
-import { createClient } from '@utils/supabase/client'
 
 export default function Login() {
-	const [checking, setChecking] = useState(true)
 	const [isLogin, setIsLogin] = useState(true)
-	const router = useRouter()
+
 	const {
 		register,
 		handleSubmit,
 		reset,
 		setError,
 		formState: { errors } } = useForm()
-
-	useEffect(() => {
-		const checkUser = async () => {
-			const supabase = createClient()
-			const { data: { user } } = await supabase.auth.getUser()
-
-			if (user) {
-				router.push('/account')
-			} else {
-				setChecking(false)
-			}
-		}
-		checkUser()
-	}, [])
 
 	async function onSignUp(data){
 		if (data.password !== data.password_confirm) {
@@ -45,10 +28,6 @@ export default function Login() {
 	async function onLogIn(data) {
 		await login(data)
 		reset()
-	}
-
-	if (checking) {
-		return <p>Checking user...</p>
 	}
 
 	return (

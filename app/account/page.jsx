@@ -20,7 +20,7 @@ export default async function Account() {
 					<p>{ user.email }</p>
 				</div>
 				<ChangeUser initialName={ profile.name } />
-				<Link className="button" href="/account/password/update">Change Password</Link>
+				<Link className="button" href="/account/update">Change Password</Link>
 			</div>
 		</div>
 	)

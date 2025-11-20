@@ -12,7 +12,7 @@ export async function GET(request) {
 		const { error } = await supabase.auth.exchangeCodeForSession(code)
 
 		if (!error) {
-			redirectTo.pathname = '/account/password/update'
+			redirectTo.pathname = '/account/update'
 			return NextResponse.redirect(redirectTo)
 		}
 	}

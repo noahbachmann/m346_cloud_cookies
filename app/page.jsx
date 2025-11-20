@@ -1,5 +1,6 @@
 import { createClient } from '@utils/supabase/server'
 import GameClient from './components/gameClient'
+import { redirect } from 'next/navigation'
 import upgrades from './data/upgrades.json'
 
 export default async function Home({ }) {
@@ -11,7 +12,7 @@ export default async function Home({ }) {
 	} = await supabase.auth.getUser()
 
 	if (error || !user) {
-		return <p>No user logged in</p>
+		redirect('/login')
 	}
 
 	/* data object:
