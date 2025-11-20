@@ -17,7 +17,7 @@ export default async function RootLayout({ children }) {
 	console.log(profile)
 	return (
 		<html lang="en">
-			<body className="min-h-screen flex flex-col">
+			<body className="min-h-screen flex flex-col background-img">
 				<Navbar user={ profile?.data } />
 				<main className="flex flex-1 *:my-auto *:flex-1">
 					{children}
