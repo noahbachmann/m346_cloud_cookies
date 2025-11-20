@@ -1,5 +1,7 @@
 export default function Email(){
 	return(
-		<p>Account created, please confirm the e-mail!</p>
+		<div className="container container-form">
+			<p>Account created, please confirm the e-mail!</p>
+		</div>
 	)
 }

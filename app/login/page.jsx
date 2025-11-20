@@ -73,7 +73,7 @@ export default function Login() {
 				</form>
 			</div>
 			:
-			<div className="container container-sm">
+			<div className="container container-form">
 				<form className="flex-1 flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(onSignUp) }>
 					<input
 						className={ `${errors.email ? 'error' : ''}` }
@@ -100,10 +100,10 @@ export default function Login() {
 						{ ...register('password_confirm', { required: true }) } />
 					{ errors.password_confirm?.type === 'pattern' && <p className="text-red-500 text-sm">{ errors.password_confirm.message }</p> }
 
-					<button className="button text-primary bg-secondary border-2 hover:border-accent hover:text-accent active:border-white active:text-white">Sign Up</button>
+					<button className="button">Sign Up</button>
 
-					<p className="link" onClick={ () => setIsLogin(!isLogin) }>Have an account? Log In</p>
-					<Link href="/account/password">Forgot Password?</Link>
+					<p className="link text-[1rem]!" onClick={ () => setIsLogin(!isLogin) }>Have an account? Log In</p>
+					<Link className="link font-normal! text-[1rem]!" href="/account/password">Forgot Password?</Link>
 				</form>
 			</div>
 		)

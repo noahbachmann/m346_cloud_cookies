@@ -41,10 +41,10 @@ export default function Navbar({ user }) {
 				(
 					<div className="w-full px-12 md:px-48 mt-28 grid grid-cols-1 md:grid-cols-4">
 						<div className="md:col-start-2 md:col-span-2 h-60 p-16 bg-primary flex justify-between items-center rounded border-dark border-1">
-							<div className="flex items-center">
+							<Link className="flex items-center" href="/">
 								<p className="text-white text-[1.75rem]! font-bold">CloudClicker</p>
 								<Image src="/vectors/cloud.svg" width="40" height="40" alt="cloud" />
-							</div>
+							</Link>
 						</div>
 					</div>
 				)
