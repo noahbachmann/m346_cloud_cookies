@@ -29,7 +29,7 @@ export default function ChangeUser({ initialName }){
 				<input
 					className={ `${errors.user ? 'error' : ''}` }
 					type="text"
-					{ ...register('user', { required: true, maxLength: 50 }) } />
+					{ ...register('user', { required: true, maxLength: 12 }) } />
 			</div>
 
 			<button className={ currentName != savedUser ? 'button w-full' : 'hidden' } disabled={ currentName == savedUser }>Change Username</button>

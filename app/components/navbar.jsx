@@ -26,9 +26,9 @@ export default function Navbar({ user }) {
 							<Link className="bg-secondary px-8 md:px-16 py-4 rounded" href="/leaderboard">Leaderboard</Link>
 						</div>
 
-						<div className="max-w-100 lg:max-w-220 h-60 px-8 md:gap-8 md:px-12 flex justify-between items-center bg-primary rounded border-dark border-1">
+						<div className="w-fit h-60 px-8 md:gap-8 md:px-12 flex justify-between items-center bg-primary rounded border-dark border-1">
 							<Link className="flex items-center gap-2" href="/account">
-								<p className="hidden lg:block">{ user.name.substring(0,8) }</p>
+								<p className="hidden lg:block">{ user.name }</p>
 								<Image src="/vectors/person.svg" width="35" height="35" alt="user" />
 							</Link>
 

@@ -63,7 +63,7 @@ export default function Login() {
 					<input
 						className={ `${errors.username ? 'error' : ''}` }
 						type="string" placeholder="Your username"
-						{ ...register('username', { required: true, maxLength: 20 }) } />
+						{ ...register('username', { required: true, maxLength: 12 }) } />
 
 					<input
 						className={ `${errors.password ? 'error' : ''}` }
