@@ -62,6 +62,19 @@ export async function logout() {
 	redirect('/')
 }
 
+export async function resetPassword(data){
+	const supabase = await createClient()
+
+	await supabase.auth.resetPasswordForEmail(data.email, {
+		redirectTo: 'http://localhost:3000//account/password/check',
+	})
+}
+
+export async function changePassword(pw){
+	const supabase = await createClient()
+	await supabase.auth.updateUser({ password: pw })
+}
+
 export async function incrementScore(data) {
 	const supabase = await createClient()
 	const userId = data.user_id

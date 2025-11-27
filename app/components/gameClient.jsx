@@ -69,7 +69,8 @@ export default function GameClient({ initialData }) {
 	}
 
 	function startBoost(){
-		if(boosting) return
+		if(data.upgrades.timeDilation <= 0 || boosting) return
+
 		setBoosting(true)
 		setTimeout(() => {
 			setBoosting(false)
@@ -158,21 +159,29 @@ export default function GameClient({ initialData }) {
 					<p className="font-bold">Upgrades purchased:</p>
 					<p>{Object.values(data.upgrades).reduce((a, b) => a + b)}</p>
 				</div>
-				<div className="flex justify-between">
+				<div className="flex justify-between mb-16">
 					<p className="font-bold">Prestige Stage:</p>
 					<p>{data.prestige}</p>
+				</div>
+				<div className="flex w-full">
+					<button className="button flex justify-between w-full" onClick={ () => prestige() }><p>Prestige lvl. {data.prestige + 1}</p><p>{ formatNumber(prestigeCost) }</p></button>
 				</div>
 			</div>
 			<div className="self-center flex flex-col items-center gap-50">
 				<div>
 					<button onClick={ click }>Click Me</button>
 				</div>
-				<div className={ data.upgrades.timeDilation <= 0 ? 'hidden' : '' }>
+				<div>
 					{
-						boosting ?
-							<button className="p-10 bg-secondary text-black/55" disabled>Boost</button>
-							:
-							<button className="p-10 bg-primary" onClick={ startBoost }>Boost</button>
+						data.upgrades.timeDilation > 0 ?
+						(
+							boosting ?
+								<button className="p-10 bg-secondary text-black/55" disabled>Boost</button>
+								:
+								<button className="p-10 bg-primary" onClick={ startBoost }>Boost</button>
+						)
+						:
+						<></>
 					}
 				</div>
 			</div>
@@ -208,13 +217,6 @@ export default function GameClient({ initialData }) {
 						)
 					})
 				}
-				<div className="flex justify-between">
-					<p className="font-bold">Prestige</p>
-					<div className="flex">
-						<button className="button w-70" onClick={ () => prestige() }>{ formatNumber(prestigeCost) }</button>
-						<p className="min-w-35 text-[0.8rem] ml-4 px-8 py-6 rounded bg-black text-white text-end">{ data.prestige }</p>
-					</div>
-				</div>
 			</div>
 		</div>
 	)

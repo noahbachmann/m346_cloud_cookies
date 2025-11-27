@@ -6,9 +6,11 @@ export default function ErrorPage() {
 	const message = params.get('message')
 
 	return (
-		<div>
-			<h1>Error</h1>
-			<p>{message || 'An unexpected error occurred.'}</p>
+		<div className="container container-form max-w-200! p-10!">
+			<div className="flex flex-col text-center">
+				<h2 className="font-bold!">Error</h2>
+				<p>{message || 'An unexpected error occurred.'}</p>
+			</div>
 		</div>
 	)
 }

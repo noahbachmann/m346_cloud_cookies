@@ -1,35 +1,18 @@
 'use client'
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from 'react'
 import Link from 'next/link'
 import { useForm } from 'react-hook-form'
 import { login, signup } from './actions'
-import { createClient } from '@utils/supabase/client'
 
 export default function Login() {
-	const [checking, setChecking] = useState(true)
 	const [isLogin, setIsLogin] = useState(true)
-	const router = useRouter()
+
 	const {
 		register,
 		handleSubmit,
 		reset,
 		setError,
 		formState: { errors } } = useForm()
-
-	useEffect(() => {
-		const checkUser = async () => {
-			const supabase = createClient()
-			const { data: { user } } = await supabase.auth.getUser()
-
-			if (user) {
-				router.push('/account')
-			} else {
-				setChecking(false)
-			}
-		}
-		checkUser()
-	}, [])
 
 	async function onSignUp(data){
 		if (data.password !== data.password_confirm) {
@@ -45,10 +28,6 @@ export default function Login() {
 	async function onLogIn(data) {
 		await login(data)
 		reset()
-	}
-
-	if (checking) {
-		return <p>Checking user...</p>
 	}
 
 	return (
@@ -73,7 +52,7 @@ export default function Login() {
 				</form>
 			</div>
 			:
-			<div className="container container-sm">
+			<div className="container container-form">
 				<form className="flex-1 flex flex-col justify-evenly gap-5 p-10" onSubmit={ handleSubmit(onSignUp) }>
 					<input
 						className={ `${errors.email ? 'error' : ''}` }
@@ -84,7 +63,7 @@ export default function Login() {
 					<input
 						className={ `${errors.username ? 'error' : ''}` }
 						type="string" placeholder="Your username"
-						{ ...register('username', { required: true, maxLength: 20 }) } />
+						{ ...register('username', { required: true, maxLength: 12 }) } />
 
 					<input
 						className={ `${errors.password ? 'error' : ''}` }
@@ -100,10 +79,10 @@ export default function Login() {
 						{ ...register('password_confirm', { required: true }) } />
 					{ errors.password_confirm?.type === 'pattern' && <p className="text-red-500 text-sm">{ errors.password_confirm.message }</p> }
 
-					<button className="button text-primary bg-secondary border-2 hover:border-accent hover:text-accent active:border-white active:text-white">Sign Up</button>
+					<button className="button">Sign Up</button>
 
-					<p className="link" onClick={ () => setIsLogin(!isLogin) }>Have an account? Log In</p>
-					<Link href="/account/password">Forgot Password?</Link>
+					<p className="link text-[1rem]!" onClick={ () => setIsLogin(!isLogin) }>Have an account? Log In</p>
+					<Link className="link font-normal! text-[1rem]!" href="/account/password">Forgot Password?</Link>
 				</form>
 			</div>
 		)
