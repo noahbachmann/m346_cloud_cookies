@@ -65,7 +65,7 @@ p {
 }
 
 hr {
-	@apply border-none bg-black;
+	@apply border-none bg-dark;
 }
 
 .background-img{
@@ -100,7 +100,7 @@ hr {
 }
 
 .button {
-	@apply text-[0.8rem] px-8 py-6 cursor-pointer text-center rounded-sm bg-black text-white;
+	@apply text-[0.8rem] px-8 py-6 cursor-pointer text-center rounded-sm bg-dark text-white;
 }
 
 .link {

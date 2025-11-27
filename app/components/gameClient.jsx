@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { incrementScore } from '../login/actions'
 import upgrades from '../data/upgrades.json'
+import Image from 'next/image'
 
 export default function GameClient({ initialData }) {
 
@@ -15,7 +16,7 @@ export default function GameClient({ initialData }) {
 	const [prestigeCost, setPrestigeCost] = useState(data.prestige == 0 ? 1000000000 : data.prestige * 5 * 1000000000)
 
 	useEffect(() => {
-		const saveData = async() => {
+		const saveData = async () => {
 			await incrementScore(dataRef.current)
 		}
 
@@ -24,8 +25,8 @@ export default function GameClient({ initialData }) {
 		}, 20000)
 
 		const idleInterval = setInterval(() => {
-			const additionalClicks = [dataRef.current.upgrades.autoClicker*upgrades.autoClicker.increase, dataRef.current.upgrades.cloudServer*upgrades.cloudServer.increase, dataRef.current.upgrades.dataCenter*upgrades.dataCenter.increase, dataRef.current.upgrades.aiAutomation*upgrades.aiAutomation.increase].reduce(((a,b)=>a+b))*(1 + dataRef.current.upgrades.loadBalancer * upgrades.loadBalancer.increase)
-			const additionalScore = additionalClicks* (1 + (dataRef.current.prestige) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
+			const additionalClicks = [dataRef.current.upgrades.autoClicker * upgrades.autoClicker.increase, dataRef.current.upgrades.cloudServer * upgrades.cloudServer.increase, dataRef.current.upgrades.dataCenter * upgrades.dataCenter.increase, dataRef.current.upgrades.aiAutomation * upgrades.aiAutomation.increase].reduce(((a, b) => a + b)) * (1 + dataRef.current.upgrades.loadBalancer * upgrades.loadBalancer.increase)
+			const additionalScore = additionalClicks * (1 + (dataRef.current.prestige) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
 
 			setData(prev => ({
 				...prev,
@@ -45,7 +46,7 @@ export default function GameClient({ initialData }) {
 
 	function click() {
 		const additionalClicks = 1 * (data.upgrades.clickBooster + 1)
-		const additionalScore = additionalClicks *  (1 + (dataRef.current.prestige) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
+		const additionalScore = additionalClicks * (1 + (dataRef.current.prestige) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
 		setData(prev => ({
 			...prev,
 			score: Math.round(prev.score + additionalScore),
@@ -56,8 +57,8 @@ export default function GameClient({ initialData }) {
 		}))
 	}
 
-	function buyUpgrade(upgrade, cost){
-		if(data.score < cost) return
+	function buyUpgrade(upgrade, cost) {
+		if (data.score < cost) return
 		setData(prev => ({
 			...prev,
 			score: prev.score - cost,
@@ -68,8 +69,8 @@ export default function GameClient({ initialData }) {
 		}))
 	}
 
-	function startBoost(){
-		if(data.upgrades.timeDilation <= 0 || boosting) return
+	function startBoost() {
+		if (data.upgrades.timeDilation <= 0 || boosting) return
 
 		setBoosting(true)
 		setTimeout(() => {
@@ -77,8 +78,8 @@ export default function GameClient({ initialData }) {
 		}, 15000)
 	}
 
-	async function prestige(){
-		if(data.score < prestigeCost) return
+	async function prestige() {
+		if (data.score < prestigeCost) return
 		setData(prev => ({
 			...prev,
 			score: 0,
@@ -164,30 +165,30 @@ export default function GameClient({ initialData }) {
 					<p>{data.prestige}</p>
 				</div>
 				<div className="flex w-full">
-					<button className="button flex justify-between w-full" onClick={ () => prestige() }><p>Prestige lvl. {data.prestige + 1}</p><p>{ formatNumber(prestigeCost) }</p></button>
+					<button className="button flex justify-between w-full" onClick={() => prestige()}><p>Prestige lvl. {data.prestige + 1}</p><p>{formatNumber(prestigeCost)}</p></button>
 				</div>
 			</div>
 			<div className="self-center flex flex-col items-center gap-50">
-				<div>
-					<button onClick={ click }>Click Me</button>
+				<div className="size-164 bg-white rounded-[50%] border-2 border-dark">
+					<button onClick={click}><Image src="/vectors/ClickCursor.svg" width="40" height="40" alt="cloud" /></button>
 				</div>
 				<div>
 					{
-						data.upgrades.timeDilation > 0 ?
-						(
-							boosting ?
-								<button className="p-10 bg-secondary text-black/55" disabled>Boost</button>
-								:
-								<button className="p-10 bg-primary" onClick={ startBoost }>Boost</button>
-						)
-						:
-						<></>
+						data.upgrades.timeDilation >= 0 ?
+							(
+								boosting ?
+									<button className="p-10 bg-secondary text-black/55" disabled>Boost</button>
+									:
+									<button className="p-10 bg-primary" onClick={startBoost}>Boost</button>
+							)
+							:
+							<></>
 					}
 				</div>
 			</div>
 
 			<div className="min-w-300 p-12 bg-primary rounded border-2 border-dark">
-				<h3 className="mb-16">Upgrades</h3>
+				<h3 className="mb-16 justify-self-end">Upgrades</h3>
 				<div className="flex justify-between mb-6">
 					<p>Name</p>
 					<div className="flex text-center">
@@ -195,23 +196,23 @@ export default function GameClient({ initialData }) {
 						<p className="px-4">Lvl</p>
 					</div>
 				</div>
-				<hr className="w-full h-2 my-6"/>
+				<hr className="w-full h-2 my-6" />
 				{
 					Object.entries(data.upgrades).map(([upgrade, level], index) => {
 						const upgradeData = upgrades[upgrade]
-						const cost = Math.floor((upgradeData.cost * (level+1)) - (upgradeData.cost * (data.upgrades.dataComp * upgrades.dataComp.increase)))
+						const cost = Math.floor((upgradeData.cost * (level + 1)) - (upgradeData.cost * (data.upgrades.dataComp * upgrades.dataComp.increase)))
 
 						return (
-							<div className="flex justify-between mb-6" key={ index }>
-								<p className="font-bold">{ upgradeData.name }</p>
+							<div className="flex justify-between mb-6" key={index}>
+								<p className="font-bold">{upgradeData.name}</p>
 								<div className="flex">
-								{
-									upgradeData.name == 'Data Compression' && level > 0 ?
-										<button className="button w-70" disabled>Max. Lvl</button>
-										:
-										<button className="button w-70" onClick={ () => buyUpgrade(upgrade, cost) }>{ formatNumber(cost) }</button>
-								}
-									<p className="min-w-35 text-[0.8rem] ml-4 px-8 py-6 rounded bg-black text-white text-end">{ level }</p>
+									{
+										upgradeData.name == 'Data Compression' && level > 0 ?
+											<button className="button w-70" disabled>Max. Lvl</button>
+											:
+											<button className="button w-70" onClick={() => buyUpgrade(upgrade, cost)}>{formatNumber(cost)}</button>
+									}
+									<p className="min-w-35 text-[0.8rem] ml-4 px-8 py-6 rounded bg-dark text-white text-end">{level}</p>
 								</div>
 							</div>
 						)
