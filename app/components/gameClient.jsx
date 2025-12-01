@@ -112,7 +112,7 @@ export default function GameClient({ initialData }) {
 
 	return (
 		<div className="py-48 xl:py-0 grid grid-cols-11">
-			<div className="col-span-full md:col-span-4 w-full md:max-w-300 xl:max-w-350 justify-self-end md:col-span-1 p-8 md:p-12 flex flex-col gap-5 xl:gap-8 bg-primary rounded border-2 border-dark">
+			<div className="col-span-full md:col-span-4 w-full md:max-w-300 xl:max-w-350 md:col-span-1 p-8 md:p-12 flex flex-col gap-5 xl:gap-8 bg-primary rounded border-2 border-dark">
 				<h3 className="mb-12">Statistics</h3>
 
 				<div className="flex justify-between">
@@ -165,12 +165,12 @@ export default function GameClient({ initialData }) {
 					<p>{data.prestige}</p>
 				</div>
 				<div className="flex w-full">
-					<button className="button flex justify-between w-full" onClick={() => prestige()}><p>Prestige lvl. {data.prestige + 1}</p><p>{formatNumber(prestigeCost)}</p></button>
+					<button className="button flex justify-between w-full" onClick={ () => prestige() }><p>Prestige lvl. {data.prestige + 1}</p><p>{formatNumber(prestigeCost)}</p></button>
 				</div>
 			</div>
 			<div className="col-span-full md:col-span-3 self-center flex flex-col items-center gap-50">
-				<div className="size-164 bg-white rounded-[50%] border-2 border-dark">
-					<button onClick={click}><Image src="/vectors/ClickCursor.svg" width="40" height="40" alt="cloud" /></button>
+				<div className="flex">
+					<button className="flex items-center justify-center size-164 bg-white rounded-[50%] border-2 border-dark" onClick={ click }><Image src="/vectors/ClickCursor.svg" width="104" height="104" alt="cloud" /></button>
 				</div>
 				<div>
 					{
@@ -179,7 +179,7 @@ export default function GameClient({ initialData }) {
 								boosting ?
 									<button className="p-10 bg-secondary text-black/55" disabled>Boost</button>
 									:
-									<button className="p-10 bg-primary" onClick={startBoost}>Boost</button>
+									<button className="p-10 bg-primary" onClick={ startBoost }>Boost</button>
 							)
 							:
 							<></>
@@ -187,7 +187,7 @@ export default function GameClient({ initialData }) {
 				</div>
 			</div>
 
-			<div className="col-span-full md:col-span-4 w-full md:max-w-300 xl:max-w-350 md:col-span-1 p-12 bg-primary rounded border-2 border-dark">
+			<div className="col-span-full md:col-span-4 justify-self-end w-full md:max-w-300 xl:max-w-350 md:col-span-1 p-12 bg-primary rounded border-2 border-dark">
 				<h3 className="mb-16">Upgrades</h3>
 				<div className="flex justify-between mb-6">
 					<p>Name</p>
@@ -203,16 +203,16 @@ export default function GameClient({ initialData }) {
 						const cost = Math.floor((upgradeData.cost * (level + 1)) - (upgradeData.cost * (data.upgrades.dataComp * upgrades.dataComp.increase)))
 
 						return (
-							<div className="flex justify-between mb-6 xl:mb-10" key={index}>
+							<div className="flex justify-between mb-6 xl:mb-10" key={ index }>
 								<p className="font-bold">{upgradeData.name}</p>
 								<div className="flex">
 									{
 										upgradeData.name == 'Data Compression' && level > 0 ?
 											<button className="button w-70" disabled>Max. Lvl</button>
 											:
-											<button className="button w-70" onClick={() => buyUpgrade(upgrade, cost)}>{formatNumber(cost)}</button>
+											<button className="button w-70" onClick={ () => buyUpgrade(upgrade, cost) }>{formatNumber(cost)}</button>
 									}
-									<p className="min-w-35 text-[0.8rem] ml-4 px-8 py-6 rounded bg-dark text-white text-end">{level}</p>
+									<p className="min-w-35 text-[0.8rem] ml-4 px-8 py-6 rounded bg-dark text-white text-end">{ level }</p>
 								</div>
 							</div>
 						)
