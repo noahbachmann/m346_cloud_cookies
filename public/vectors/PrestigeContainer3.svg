@@ -1,0 +1,60 @@
+<svg 
+	viewBox="0 0 220 160"
+	fill="none" 
+	xmlns="http://www.w3.org/2000/svg">
+	<rect 
+		x="-42" 
+		y="72" 
+		width="50" 
+		height="50"
+		rx="12"
+		ry="12"
+		transform="rotate(-45)"
+		fill="#758BFD"
+		stroke="#1B2636"
+		stroke-width="1" />
+	<rect 
+		x="34" 
+		y="148" 
+		width="50" 
+		height="50"
+		rx="12"
+		ry="12"
+		transform="rotate(-45)"
+		fill="#758BFD"
+		stroke="#1B2636"
+		stroke-width="1" />
+	<rect 
+		x="-36" 
+		y="78" 
+		width="80" 
+		height="80"
+		rx="12"
+		ry="12"
+		transform="rotate(-45)"
+		fill="#4E52BE"
+		stroke="#1B2636"
+		stroke-width="1" />
+	<rect 
+		x="-2" 
+		y="112" 
+		width="80" 
+		height="80"
+		rx="12"
+		ry="12"
+		transform="rotate(-45)"
+		fill="#4E52BE"
+		stroke="#1B2636"
+		stroke-width="1" />
+	<rect 
+		x="-29" 
+		y="85" 
+		width="100" 
+		height="100"
+		rx="12"
+		ry="12"
+		transform="rotate(-45)"
+		fill="#27187E"
+		stroke="#1B2636"
+		stroke-width="1" />
+</svg>
