@@ -66,7 +66,7 @@ export async function resetPassword(data){
 	const supabase = await createClient()
 
 	await supabase.auth.resetPasswordForEmail(data.email, {
-		redirectTo: 'http://localhost:3000//account/password/check',
+		redirectTo: 'https://m346cloudcookies.vercel.app/account/password/check',
 	})
 }
 

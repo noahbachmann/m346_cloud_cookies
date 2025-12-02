@@ -3,6 +3,7 @@ import { createClient } from '@utils/supabase/server'
 
 export async function GET(request) {
 	const { searchParams } = new URL(request.url)
+
 	const code = searchParams.get('code')
 	const redirectTo = request.nextUrl.clone()
 	redirectTo.searchParams.delete('code')
