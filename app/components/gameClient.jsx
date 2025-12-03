@@ -41,7 +41,7 @@ export default function GameClient({ initialData }) {
 	}, [])
 
 	function click() {
-		const additionalClicks = 1 + Math.max(((upgrades.clickerBooster.increase * dataRef.current.upgrades.clickBooster) - 1), 0)
+		const additionalClicks = 1 + Math.max(((upgrades.clickBooster.increase * dataRef.current.upgrades.clickBooster) - 1), 0)
 		const additionalScore = additionalClicks * (1 + (dataRef.current.prestige) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
 		setData(prev => ({
 			...prev,
