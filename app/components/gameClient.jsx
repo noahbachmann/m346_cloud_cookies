@@ -41,7 +41,7 @@ export default function GameClient({ initialData }) {
 	}, [])
 
 	function click() {
-		const additionalClicks = 1 * (data.upgrades.clickBooster + 1)
+		const additionalClicks = 1 + Math.max(((upgrades.clickerBooster.increase * dataRef.current.upgrades.clickBooster) - 1), 0)
 		const additionalScore = additionalClicks * (1 + (dataRef.current.prestige) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
 		setData(prev => ({
 			...prev,
@@ -96,7 +96,11 @@ export default function GameClient({ initialData }) {
 	}
 
 	function formatNumber(num) {
-		if (num >= 1_000_000_000) {
+		if (num >= 1_000_000_000_000_000) {
+			return (num / 1_000_000_000_000_000).toFixed(2).replace(/\.0$/, '') + 'q'
+		} else if (num >= 1_000_000_000_000) {
+			return (num / 1_000_000_000_000).toFixed(2).replace(/\.0$/, '') + 't'
+		} else if (num >= 1_000_000_000) {
 			return (num / 1_000_000_000).toFixed(2).replace(/\.0$/, '') + 'b'
 		} else if (num >= 1_000_000) {
 			return (num / 1_000_000).toFixed(2).replace(/\.0$/, '') + 'm'
@@ -131,7 +135,7 @@ export default function GameClient({ initialData }) {
 				</div>
 				<div className="flex justify-between mb-12">
 					<p className="font-bold">Click value:</p>
-					<p>{formatNumber(data.upgrades.clickBooster + 1)}</p>
+					<p>{formatNumber(1 + Math.max(((upgrades.clickBooster.increase * data.upgrades.clickBooster) - 1), 0))}</p>
 				</div>
 				<div className="flex justify-between">
 					<p className="font-bold">Total Clicks:</p>

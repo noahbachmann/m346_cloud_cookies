@@ -39,7 +39,7 @@ export default async function Leaderboard({ }) {
 				<div className="flex flex-col gap-20 font-semibold">
 					{
 						Object.values(users).map((user, index) => (
-							<div className="flex justify-between *:text-[1.4rem]!" key={index}>
+							<div className="flex justify-between *:text-[1.4rem]!" key={ index }>
 								<p>{index + 1}. {user.name}</p>
 								<p>{formatNumber(user.gameState.total_score)}</p>
 							</div>

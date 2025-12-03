@@ -3,7 +3,7 @@
 		"name":"Click Booster",
 		"cost": 500,
 		"description": "Each manual click gives +1 point per Upgrade.",
-		"increase": 1
+		"increase": 100
 	},
 	"autoClicker": {
 		"name":"Auto Clicker",
