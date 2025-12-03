@@ -19,10 +19,10 @@ export default function Navbar({ user, prestige }) {
 			{ user ?
 				(
 					<div className="grid w-full px-12 md:px-24 lg:px-48 mt-14 lg:mt-28 grid-cols-3 md:grid-cols-4 gap-12 md:gap-24 lg:gap-48">
-						<div className={ `hidden lg:flex relative justify-center text-${prestigeTextColor}` }>
-							<p className={ `absolute top-62 font-${fontWeight} text-[0.9rem]!` }>Prestige Level</p>
-							<p className="absolute top-92 font-semibold text-[1.8rem]!">{ prestige }</p>
-							<Image src={ `/vectors/PrestigeContainer${prestige}.svg` } width="220" height="160" alt="cloud" />
+						<div className={ `hidden lg:min-h-144 lg:flex flex-col -mt-12 relative items-center justify-center gap-5 text-${prestigeTextColor}` }>
+							<p className={ `top-62 font-${fontWeight} text-[0.9rem]! z-10` }>Prestige</p>
+							<p className="top-92 font-semibold text-[1.8rem]! z-10">{ prestige }</p>
+							<Image className="absolute" src={ `/vectors/PrestigeContainer${Math.min(prestige, 12)}.svg` } width="187" height="136" alt="cloud" />
 						</div>
 
 						<div className="col-span-2 md:col-start-2 h-60 p-8 lg:p-16 flex justify-between items-center bg-primary rounded border-dark border-1">
