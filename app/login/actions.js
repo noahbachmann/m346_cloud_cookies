@@ -83,3 +83,7 @@ export async function incrementScore(data) {
 		.update({ score:data.score, highscore:data.highscore, upgrades:data.upgrades, clicks:data.clicks, self_clicks:data.self_clicks, highscore:data.highscore, total_score:data.total_score, prestige:data.prestige, last_update: new Date() })
 		.eq('user_id', userId)
 }
+
+export async function revalidateHome(){
+	revalidatePath('/')
+}

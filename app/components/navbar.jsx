@@ -1,8 +1,14 @@
 'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Navbar({ user }) {
+export default function Navbar({ user, prestige }) {
+	const white = [0, 1, 2, 3, 4, 6, 10, 12].includes(prestige)
+
+	const prestigeTextColor = white ? 'white' : 'dark'
+	const fontWeight = white ? 'semibold' : 'bold'
+
 
 	function handleLogout() {
 		window.location.href = '/logout'
@@ -13,11 +19,13 @@ export default function Navbar({ user }) {
 			{ user ?
 				(
 					<div className="grid w-full px-12 md:px-24 lg:px-48 mt-14 lg:mt-28 grid-cols-3 md:grid-cols-4 gap-12 md:gap-24 lg:gap-48">
-						<div className="hidden md:block">
-							<p>prestige</p>
+						<div className={ `hidden lg:min-h-144 lg:flex flex-col -mt-12 relative items-center justify-center gap-5 text-${prestigeTextColor}` }>
+							<p className={ `top-62 font-${fontWeight} text-[0.9rem]! z-10` }>Prestige</p>
+							<p className="top-92 font-semibold text-[1.8rem]! z-10">{ prestige }</p>
+							<Image className="absolute" src={ `/vectors/PrestigeContainer${Math.min(prestige, 12)}.svg` } width="187" height="136" alt="cloud" />
 						</div>
 
-						<div className="col-span-2 h-60 p-8 lg:p-16 flex justify-between items-center bg-primary rounded border-dark border-1">
+						<div className="col-span-2 md:col-start-2 h-60 p-8 lg:p-16 flex justify-between items-center bg-primary rounded border-dark border-1">
 							<Link className="flex items-center" href="/">
 								<p className="hidden md:block text-white text-[1.5rem]! lg:text-[1.75rem]! font-bold">CloudClicker</p>
 								<Image src="/vectors/cloud.svg" width="40" height="40" alt="cloud" />

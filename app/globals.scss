@@ -10,15 +10,17 @@
 
 	--radius-lg: 1rem;
 	--radius-l: 0.8rem;
-	--radius-md: 0.8rem;
-	--radius-sm: 0.25rem;
+	--radius-md: 0.25rem;
+	--radius-sm: 0.125rem;
 
 	--shadow: 1.5px 3px 3px hsl(0deg 0% 0% / 0.35);
 
+	--shadow-inset-top-left: inset 5px 5px 4px rgba(0, 0, 0, 0.1);
 	--shadow-inset-right: inset -5px 0 4px rgba(0, 0, 0, 0.1);
 	--shadow-inset-bottom: inset 0 -5px 4px rgba(0, 0, 0, 0.1);
+	--shadow-inset-left: inset -5px 0 4px rgba(0, 0, 0, 0.1);
 	--shadow-top: 0 -2px 2px hsl(0deg 0% 0% / 0.3);
-	--shadow-bottom: 0 2px 2px hsl(0deg 0% 0% / 0.3);
+	--shadow-bottom-right: 4px 4px 4px -2px hsl(0deg 0% 0% / 0.3);
 	--shadow-input: 0 0 0 2px rgb(118, 16, 79);
 
 	--color-primary: #74B1FB;
@@ -65,7 +67,7 @@ p {
 }
 
 hr {
-	@apply border-none bg-black;
+	@apply border-none bg-dark;
 }
 
 .background-img{
@@ -100,7 +102,15 @@ hr {
 }
 
 .button {
-	@apply text-[0.8rem] px-8 py-6 cursor-pointer text-center rounded-sm bg-black text-white;
+	@apply text-[0.8rem] px-8 py-6 cursor-pointer text-center rounded bg-dark text-white;
+}
+
+.button-boost {
+	@apply active:bg-dark active:text-white hover:opacity-100;
+}
+
+.click {
+	@apply active:border-0 active:shadow-inset-top-left;
 }
 
 .link {

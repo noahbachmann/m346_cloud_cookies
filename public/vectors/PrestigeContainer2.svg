@@ -1,0 +1,38 @@
+<svg 
+	viewBox="0 0 220 160"
+	fill="none" 
+	xmlns="http://www.w3.org/2000/svg">
+	<rect 
+		x="-36" 
+		y="78" 
+		width="80" 
+		height="80"
+		rx="12"
+		ry="12"
+		transform="rotate(-45)"
+		fill="#BDC667"
+		stroke="#1B2636"
+		stroke-width="1" />
+	<rect 
+		x="-2" 
+		y="112" 
+		width="80" 
+		height="80"
+		rx="12"
+		ry="12"
+		transform="rotate(-45)"
+		fill="#BDC667"
+		stroke="#1B2636"
+		stroke-width="1" />
+	<rect 
+		x="-29" 
+		y="85" 
+		width="100" 
+		height="100"
+		rx="12"
+		ry="12"
+		transform="rotate(-45)"
+		fill="#77966D"
+		stroke="#1B2636"
+		stroke-width="1" />
+</svg>
