@@ -206,7 +206,7 @@ export default function GameClient({ initialData }) {
 						return (
 							<div className="flex justify-between mb-6 xl:mb-10" key={ index }>
 								<div className="group relative">
-									<div className="absolute hidden p-6 bg-dark rounded-sm text-white top-20 -left-50 w-200 text-center group-hover:block z-50">
+									<div className="absolute hidden p-6 bg-dark rounded text-white top-20 -left-50 w-200 text-center group-hover:block z-50">
 										<p className="">{ upgradeData.description }</p>
 									</div>
 									<p className="font-bold">{upgradeData.name}</p>
