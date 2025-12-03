@@ -44,7 +44,7 @@
 	"timeDilation": {
 		"name":"Time Dilation",
 		"cost": 500000000,
-		"description": "Each click rips open a rift in time — the entire system surges into overdrive for 10 seconds as your system bends reality itself.",
+		"description": "Each click rips open a rift in time — the entire system surges into overdrive for 15 seconds as your system bends reality itself.",
 		"increase": 2
 	}
 }

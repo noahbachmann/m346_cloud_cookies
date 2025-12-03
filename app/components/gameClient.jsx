@@ -201,7 +201,12 @@ export default function GameClient({ initialData }) {
 
 						return (
 							<div className="flex justify-between mb-6 xl:mb-10" key={ index }>
-								<p className="font-bold">{upgradeData.name}</p>
+								<div className="group relative">
+									<div className="absolute hidden p-6 bg-dark rounded-sm text-white top-20 -left-50 w-200 text-center group-hover:block z-50">
+										<p className="">{ upgradeData.description }</p>
+									</div>
+									<p className="font-bold">{upgradeData.name}</p>
+								</div>
 								<div className="flex">
 									{
 										upgradeData.name == 'Data Compression' && level > 0 ?
