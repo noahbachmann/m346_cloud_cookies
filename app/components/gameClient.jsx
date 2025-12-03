@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect, useRef } from 'react'
-import { incrementScore } from '../login/actions'
+import { incrementScore, revalidateHome } from '../login/actions'
 import upgrades from '../data/upgrades.json'
 import Image from 'next/image'
 
@@ -8,22 +8,19 @@ export default function GameClient({ initialData }) {
 
 	const [data, setData] = useState(initialData)
 	const dataRef = useRef(data)
-	useEffect(() => {
-		dataRef.current = data
-	}, [data])
-
 	const [boosting, setBoosting] = useState(false)
 	const [prestigeCost, setPrestigeCost] = useState(data.prestige == 0 ? 1000000000 : data.prestige * 5 * 1000000000)
 
+	async function saveData() {
+		await incrementScore(dataRef.current)
+	}
+
 	useEffect(() => {
-		const saveData = async () => {
-			await incrementScore(dataRef.current)
-		}
+		dataRef.current = data
+		saveData()
+	}, [data])
 
-		const saveInterval = setInterval(() => {
-			saveData()
-		}, 20000)
-
+	useEffect(() => {
 		const idleInterval = setInterval(() => {
 			const additionalClicks = [dataRef.current.upgrades.autoClicker * upgrades.autoClicker.increase, dataRef.current.upgrades.cloudServer * upgrades.cloudServer.increase, dataRef.current.upgrades.dataCenter * upgrades.dataCenter.increase, dataRef.current.upgrades.aiAutomation * upgrades.aiAutomation.increase].reduce(((a, b) => a + b)) * (1 + dataRef.current.upgrades.loadBalancer * upgrades.loadBalancer.increase)
 			const additionalScore = additionalClicks * (1 + (dataRef.current.prestige) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
@@ -39,7 +36,6 @@ export default function GameClient({ initialData }) {
 
 		return () => {
 			saveData()
-			clearInterval(saveInterval)
 			clearInterval(idleInterval)
 		}
 	}, [])
@@ -78,7 +74,7 @@ export default function GameClient({ initialData }) {
 		}, 15000)
 	}
 
-	async function prestige() {
+	function prestige() {
 		if (data.score < prestigeCost) return
 		setData(prev => ({
 			...prev,
@@ -95,7 +91,8 @@ export default function GameClient({ initialData }) {
 			},
 			prestige: prev.prestige + 1,
 		}))
-		setPrestigeCost(data.prestige * 5 * 1000000000)
+		setPrestigeCost(dataRef.current.prestige * 5 * 1000000000)
+		revalidateHome()
 	}
 
 	function formatNumber(num) {

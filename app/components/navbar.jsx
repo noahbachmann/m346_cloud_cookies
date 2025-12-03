@@ -1,33 +1,14 @@
 'use client'
+
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Navbar({ user }) {
-	const x = 5
-	let prestigeTextColor = 'white'
-	let fontWeight = 'semibold'
+export default function Navbar({ user, prestige }) {
+	const white = [0, 1, 2, 3, 4, 6, 10, 12].includes(prestige)
 
-	switch (x) {
-		case 0:
-		case 1:
-		case 2:
-		case 3:
-		case 4:
-		case 6:
-		case 10:
-		case 12:
-			prestigeTextColor = 'white'
-			fontWeight = 'semibold'
-			break
-		case 5:
-		case 7:
-		case 8:
-		case 9:
-		case 11:
-			prestigeTextColor = 'dark'
-			fontWeight = 'bold'
-			break
-	}
+	const prestigeTextColor = white ? 'white' : 'dark'
+	const fontWeight = white ? 'semibold' : 'bold'
+
 
 	function handleLogout() {
 		window.location.href = '/logout'
@@ -40,8 +21,8 @@ export default function Navbar({ user }) {
 					<div className="grid w-full px-12 md:px-24 lg:px-48 mt-14 lg:mt-28 grid-cols-3 md:grid-cols-4 gap-12 md:gap-24 lg:gap-48">
 						<div className={ `hidden lg:flex relative justify-center text-${prestigeTextColor}` }>
 							<p className={ `absolute top-62 font-${fontWeight} text-[0.9rem]!` }>Prestige Level</p>
-							<p className="absolute top-92 font-semibold text-[1.8rem]!">0</p>
-							<Image src={ `/vectors/PrestigeContainer${x}.svg` } width="220" height="160" alt="cloud" />
+							<p className="absolute top-92 font-semibold text-[1.8rem]!">{ prestige }</p>
+							<Image src={ `/vectors/PrestigeContainer${prestige}.svg` } width="220" height="160" alt="cloud" />
 						</div>
 
 						<div className="col-span-2 md:col-start-2 h-60 p-8 lg:p-16 flex justify-between items-center bg-primary rounded border-dark border-1">
