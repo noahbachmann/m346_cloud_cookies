@@ -24,10 +24,10 @@ export default function ChangeUser({ initialName }){
 
 	return(
 		<form className="flex flex-col gap-6" onSubmit={ handleSubmit(onSubmit) }>
-			<div className="flex items-center justify-between gap-4">
-				<p className="font-bold">Username:</p>
+			<div className="flex items-center justify-between gap-20">
+				<p className="font-bold pr-20">Username:</p>
 				<input
-					className={ `${errors.user ? 'error' : ''}` }
+					className={ `${errors.user ? 'error' : ''} text-center max-w-150` }
 					type="text"
 					{ ...register('user', { required: true, maxLength: 12 }) } />
 			</div>

@@ -14,7 +14,7 @@ export default async function Account() {
 
 	return (
 		<div className="container container-form">
-			<div className="flex flex-col gap-7">
+			<div className="flex flex-col gap-10">
 				<div className="flex justify-between">
 					<p className="font-bold">E-Mail:</p>
 					<p>{ user.email }</p>
