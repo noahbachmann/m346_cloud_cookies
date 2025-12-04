@@ -11,16 +11,19 @@ export default function GameClient({ initialData }) {
 	const [boosting, setBoosting] = useState(false)
 	const [prestigeCost, setPrestigeCost] = useState(data.prestige == 0 ? 1000000000 : data.prestige * 5 * 1000000000)
 
-	async function saveData() {
-		await incrementScore(dataRef.current)
+	async function saveData(newData = null) {
+		await incrementScore(newData ? newData : dataRef.current)
 	}
 
 	useEffect(() => {
 		dataRef.current = data
-		saveData()
 	}, [data])
 
 	useEffect(() => {
+		const saveInterval = setInterval(() => {
+			saveData()
+		}, 30000)
+
 		const idleInterval = setInterval(() => {
 			const additionalClicks = [dataRef.current.upgrades.autoClicker * upgrades.autoClicker.increase, dataRef.current.upgrades.cloudServer * upgrades.cloudServer.increase, dataRef.current.upgrades.dataCenter * upgrades.dataCenter.increase, dataRef.current.upgrades.aiAutomation * upgrades.aiAutomation.increase].reduce(((a, b) => a + b)) * (1 + dataRef.current.upgrades.loadBalancer * upgrades.loadBalancer.increase)
 			const additionalScore = additionalClicks * (1 + (dataRef.current.prestige) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
@@ -37,6 +40,7 @@ export default function GameClient({ initialData }) {
 		return () => {
 			saveData()
 			clearInterval(idleInterval)
+			clearInterval(saveInterval)
 		}
 	}, [])
 
@@ -55,14 +59,16 @@ export default function GameClient({ initialData }) {
 
 	function buyUpgrade(upgrade, cost) {
 		if (data.score < cost) return
-		setData(prev => ({
-			...prev,
-			score: prev.score - cost,
+		const newData = {
+			...data,
+			score: data.score - cost,
 			upgrades: {
-				...prev.upgrades,
-				[upgrade]: prev.upgrades[upgrade] + 1
+				...data.upgrades,
+				[upgrade]: data.upgrades[upgrade] + 1
 			}
-		}))
+		}
+		setData(newData)
+		saveData(newData)
 	}
 
 	function startBoost() {
@@ -76,22 +82,25 @@ export default function GameClient({ initialData }) {
 
 	function prestige() {
 		if (data.score < prestigeCost) return
-		setData(prev => ({
-			...prev,
-			score: 0,
-			upgrades: {
-				clickBooster: 0,
-				autoClicker: 0,
-				cloudServer: 0,
-				dataCenter: 0,
-				aiAutomation: 0,
-				loadBalancer: 0,
-				dataComp: 0,
-				timeDilation: 0,
-			},
-			prestige: prev.prestige + 1,
-		}))
-		setPrestigeCost(dataRef.current.prestige * 5 * 1000000000)
+
+		const newData = {
+				...data,
+				score: 0,
+				upgrades: {
+					clickBooster: 0,
+					autoClicker: 0,
+					cloudServer: 0,
+					dataCenter: 0,
+					aiAutomation: 0,
+					loadBalancer: 0,
+					dataComp: 0,
+					timeDilation: 0,
+				},
+				prestige: data.prestige + 1,
+			}
+		setData(newData)
+		saveData(newData)
+		setPrestigeCost(newData.prestige * 5 * 1000000000)
 		revalidateHome()
 	}
 
