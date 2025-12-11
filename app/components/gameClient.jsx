@@ -1,12 +1,11 @@
 'use client'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect } from 'react'
 import { incrementScore, revalidateHome } from '../login/actions'
 import upgrades from '../data/upgrades.json'
 import Image from 'next/image'
 
 export default function GameClient({ initialData }) {
 	const [data, setData] = useState(initialData)
-	const dataRef = useRef(data)
 	const [boosting, setBoosting] = useState(false)
 	const [prestigeCost, setPrestigeCost] = useState(data.prestige == 0 ? 1000000000 : data.prestige * 5 * 1000000000)
 
@@ -18,12 +17,8 @@ export default function GameClient({ initialData }) {
 	}, [])
 
 	async function saveData(newData = null) {
-		await incrementScore(newData ? newData : dataRef.current)
+		await incrementScore(newData ? newData : data)
 	}
-
-	useEffect(() => {
-		dataRef.current = data
-	}, [data])
 
 	useEffect(() => {
 		const saveInterval = setInterval(() => {
@@ -31,8 +26,8 @@ export default function GameClient({ initialData }) {
 		}, 30000)
 
 		const idleInterval = setInterval(() => {
-			const additionalClicks = [dataRef.current.upgrades.autoClicker * upgrades.autoClicker.increase, dataRef.current.upgrades.cloudServer * upgrades.cloudServer.increase, dataRef.current.upgrades.dataCenter * upgrades.dataCenter.increase, dataRef.current.upgrades.aiAutomation * upgrades.aiAutomation.increase].reduce(((a, b) => a + b)) * (1 + dataRef.current.upgrades.loadBalancer * upgrades.loadBalancer.increase)
-			const additionalScore = additionalClicks * (1 + (dataRef.current.prestige) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
+			const additionalClicks = [data.upgrades.autoClicker * upgrades.autoClicker.increase, data.upgrades.cloudServer * upgrades.cloudServer.increase, data.upgrades.dataCenter * upgrades.dataCenter.increase, data.upgrades.aiAutomation * upgrades.aiAutomation.increase].reduce(((a, b) => a + b)) * (1 + data.upgrades.loadBalancer * upgrades.loadBalancer.increase)
+			const additionalScore = additionalClicks * (1 + (data.prestige) + (boosting ? data.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
 
 			setData(prev => ({
 				...prev,
@@ -51,8 +46,8 @@ export default function GameClient({ initialData }) {
 	}, [])
 
 	function click() {
-		const additionalClicks = Math.max(1, (upgrades.clickBooster.increase * dataRef.current.upgrades.clickBooster))
-		const additionalScore = additionalClicks * (1 + (dataRef.current.prestige) + (boosting ? dataRef.current.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
+		const additionalClicks = Math.max(1, (upgrades.clickBooster.increase * data.upgrades.clickBooster))
+		const additionalScore = additionalClicks * (1 + (data.prestige) + (boosting ? data.upgrades.timeDilation * upgrades.timeDilation.increase : 0))
 		setData(prev => ({
 			...prev,
 			score: Math.round(prev.score + additionalScore),
