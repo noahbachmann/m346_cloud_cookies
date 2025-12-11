@@ -5,11 +5,17 @@ import upgrades from '../data/upgrades.json'
 import Image from 'next/image'
 
 export default function GameClient({ initialData }) {
-
 	const [data, setData] = useState(initialData)
 	const dataRef = useRef(data)
 	const [boosting, setBoosting] = useState(false)
 	const [prestigeCost, setPrestigeCost] = useState(data.prestige == 0 ? 1000000000 : data.prestige * 5 * 1000000000)
+
+	useEffect(() => {
+		const onPopState = () => {
+			window.location.reload()
+		}
+		window.addEventListener('popstate', onPopState)
+	}, [])
 
 	async function saveData(newData = null) {
 		await incrementScore(newData ? newData : dataRef.current)

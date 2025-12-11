@@ -1,7 +1,11 @@
+export const revalidate = 0
+export const dynamic = 'force-dynamic'
+export const fetchCache = 'force-no-store'
+
 import { createClient } from '@utils/supabase/server'
 import GameClient from './components/gameClient'
 import { redirect } from 'next/navigation'
-import upgrades from './data/upgrades.json'
+import upgrades from './data/upgrades'
 
 export default async function Home({ }) {
 	const supabase = await createClient()
@@ -26,7 +30,7 @@ export default async function Home({ }) {
 
 	return (
 		<div className="container container-lg my-auto flex-1">
-			<GameClient initialData={ data } />
+			<GameClient initialData={ data }/>
 		</div>
 	)
 }
